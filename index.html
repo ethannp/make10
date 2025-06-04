@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>make10</title>
+        <meta name="description" content>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="main.css">
+        <script src="math-expression-evaluator.min.js"></script>
+        <script src="app.js" defer></script>
+    </head>
+    <body>
+        <div class="all" id="all">
+            <h1>make10</h1>
+            <p>your goal is to make a mathematical expression that equals 10 using four numbers in order. allowed characters: <code>+-*/().^!</code>.</p>
+            <p>try these to start out!</p>
+            <div class="temp" id="make-1234"></div>
+            <div class="temp" id="make-4211"></div>
+            <div class="temp" id="make-1111"></div>
+            <p>next, you can try <a href="all.html">all the numbers</a>!</p>
+            <details>
+                <summary>technical notes</summary>
+                <ul>
+                    <li>not all puzzles are solvable</li>
+                    <li>the calculator is <a href="https://github.com/bugwheels94/math-expression-evaluator#readme" target="_blank">math-expression-evaluator</a>.</li>
+                    <li><code>^</code> uses JS <code>Math.pow()</code> which has some <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow" target="_blank">unintended behavior with 0, NaN, and Infinity</a> (e.g., 0^0 = 1, NaN^0 = 1)</li>
+                </ul>
+            </details>
+        </div>
+    </body>
+</html>
