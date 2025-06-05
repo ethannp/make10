@@ -172,3 +172,11 @@ abbr {
 #challenge {
     color: red;
 }
+
+label {
+    white-space: nowrap;
+}
+
+li {
+    padding-bottom: 5px;
+}

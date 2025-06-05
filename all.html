@@ -12,7 +12,8 @@
             href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap"
             rel="stylesheet">
         <link rel="stylesheet" href="main.css">
-        <script src="math-expression-evaluator.min.js"></script>
+        <script src="decimal.js"></script>
+        <script src="gemini-mexp-decimal.js"></script>
         <script src="SPECIAL.js" defer></script>
         <script src="app.js" defer></script>
         <script src="all.js" defer></script>
@@ -22,19 +23,20 @@
             <h1 id="title">all puzzles</h1>
             <a href="index.html">back to home</a>
             <div id="options">
-                <input type="checkbox" id="hidecompleted"><label
-                    for="hidecompleted">unsolved</label>
-                <input type="checkbox" id="hideunsolved"><label
-                    for="hideunsolved">completed</label>
-                <input type="checkbox" id="recommended"><label
-                    for="recommended">recommended</label>
-                <input type="checkbox" id="has-challenge"><label
-                    for="has-challenge">has-challenge</label>
-                <input type="checkbox" id="random"><label for="random">random
-                    order</label>
-                    <br/>
-                    <input placeholder="search (# matches any character)" maxlength="4" id="search" autocomplete="off">
-                
+                <label for="hidecompleted">
+                    <input type="checkbox" id="hidecompleted">unsolved</label>
+                <label for="hideunsolved">
+                    <input type="checkbox" id="hideunsolved">completed</label>
+                <label for="recommended">
+                    <input type="checkbox" id="recommended">recommended</label>
+                <label for="has-challenge">
+                    <input type="checkbox" id="has-challenge">has-challenge</label>
+                <label for="random">
+                    <input type="checkbox" id="random">random order</label>
+                <br />
+                <input placeholder="search (# matches any character)"
+                    maxlength="4" id="search" autocomplete="off">
+
             </div>
             <p id="completedcount"></p>
             <div id="scroll-container">

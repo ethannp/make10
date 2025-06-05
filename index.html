@@ -12,7 +12,8 @@
             href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap"
             rel="stylesheet">
         <link rel="stylesheet" href="main.css">
-        <script src="math-expression-evaluator.min.js"></script>
+        <script src="decimal.js"></script>
+        <script src="gemini-mexp-decimal.js"></script>
         <script src="SPECIAL.js" defer></script>
         <script src="app.js" defer></script>
     </head>
@@ -28,9 +29,10 @@
             <details>
                 <summary>technical notes</summary>
                 <ul>
-                    <li>not all puzzles are solvable</li>
-                    <li>the calculator is an edited version of <a href="https://github.com/bugwheels94/math-expression-evaluator#readme" target="_blank">math-expression-evaluator</a>.</li>
-                    <li><code>^</code> uses JS <code>Math.pow()</code> which has some <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow" target="_blank">unintended behavior with 0, NaN, and Infinity</a> (namely, 0^0 = 1)</li>
+                    <li>not all puzzles are solvable.</li>
+                    <li>0^0 = 1 and 0! = 1. </li>
+                    <li>the calculator is an edited version of <a href="https://github.com/bugwheels94/math-expression-evaluator#readme" target="_blank">math-expression-evaluator</a> to use <a href="https://mikemcl.github.io/decimal.js/" target="_blank">decimal.js</a>. this change was vibe coded with google gemini.</li>
+                    <li>💥means that the numbers are too large or require too many digits of precision. this is to avoid lag spikes in calculations.</li>
                     <li>message me on discord @flfff for comments, suggestions, or fun puzzles!</li>
                 </ul>
             </details>

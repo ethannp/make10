@@ -68,6 +68,21 @@ function markChallengeComplete(n) {
     localStorage.setItem("make10-challengecomplete", challengecompleted.join(","))
 }
 
+function formatAns(ans) {
+    /*const intpart = Math.floor(ans);
+    const decimal = ans - intpart;
+    const decimalstr = decimal.toFixed(20).substring(2);
+
+    const slice = decimalstr.slice(4, decimalstr.length - 1);
+    if (slice.length > 0 && [...slice].every(d => d == '9')) {
+        //every digit at the end (except last, possibly 8) is a 9, so round up
+        return (intpart + Math.ceil(decimal));
+    }
+    // don't round. truncate and add ... if appropriate*/
+    let trunc = ans.times(10000).round().dividedBy(10000);
+    return trunc.equals(ans) ? ans : ans.toFixed(4) + "…";
+}
+
 function calc(num) {
     let ans = document.getElementById("ans-" + num);
     let query = "";
@@ -85,12 +100,11 @@ function calc(num) {
             ans.textContent = "♾️";
             return;
         }
-        if (result > 1e15 || result < -(1e15)) {
-            ans.innerHTML = "<abbr title='precision too high!'>💥</abbr>";
+        if (result.abs().greaterThan(new Decimal(1e15))) {
+            ans.innerHTML = "💥";
             return;
         }
-        let trunc = Math.trunc(result * 1000) / 1000;
-        ans.textContent = trunc === result ? result : trunc.toFixed(3) + "…";
+        ans.textContent = formatAns(result);
         if (result == 10) {
             ans.textContent = "10✅"
             document.getElementById("frame-" + num).classList.add("complete");
@@ -113,7 +127,7 @@ function calc(num) {
     } catch (e) {
         console.log(e.message)
         if (e.message == "explode") {
-            ans.innerHTML = "<abbr title='precision too high!'>💥</abbr>"
+            ans.innerHTML = "💥"
         }
         else if (e.message == "infinity") {
             ans.textContent = "♾️";
