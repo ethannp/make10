@@ -1,5 +1,16 @@
 const mexp = new Mexp();
 
+let completed;
+try { completed = localStorage.getItem("make10-complete").split(",") }
+catch (e) {
+    completed = [];
+}
+let challengecompleted;
+try { challengecompleted = localStorage.getItem("make10-challengecomplete").split(",") }
+catch (e) {
+    challengecompleted = [];
+}
+
 function makeFrame(n) {
     let num = String(n).padStart(4, '0');
     let frame = document.getElementById("make-" + num);
@@ -39,20 +50,23 @@ function makeFrame(n) {
 }
 
 function markComplete(n) {
-    let complete = []
-    try { complete = localStorage.getItem("make10-complete").split(","); }
-    catch (e) {
-        complete = [];
-    }
     let num = String(n).padStart(4, '0');
-    if (!complete.includes(num)) {
-        complete.push(num);
+    if (!completed.includes(num)) {
+        completed.push(num);
         try { document.getElementById("title").innerHTML += "✅" }
         catch (err) { }
     }
-    localStorage.setItem("make10-complete", complete.join(","))
+    localStorage.setItem("make10-complete", completed.join(","))
 }
 
+function markChallengeComplete(n) {
+    markComplete(n);
+    let num = String(n).padStart(4, '0');
+    if (!challengecompleted.includes(num)) {
+        challengecompleted.push(num);
+    }
+    localStorage.setItem("make10-challengecomplete", challengecompleted.join(","))
+}
 
 function calc(num) {
     let ans = document.getElementById("ans-" + num);
@@ -64,7 +78,7 @@ function calc(num) {
     query += document.getElementById("i5" + "-" + num).value;
     try {
         let result = mexp.eval(query);
-        if (result == NaN) {
+        if (isNaN(result)) {
             throw "nan";
         }
         if (result == "Infinity") {
@@ -76,7 +90,6 @@ function calc(num) {
             return;
         }
         let trunc = Math.trunc(result * 1000) / 1000;
-        console.log(result);
         ans.textContent = trunc === result ? result : trunc.toFixed(3) + "…";
         if (result == 10) {
             ans.textContent = "10✅"
@@ -85,12 +98,24 @@ function calc(num) {
         } else {
             document.getElementById("frame-" + num).classList.remove("complete");
         }
+        if ((result == 10 || completed.includes(num)) && challenge.some(a => a.puz == num)) {
+            const restr = challenge.find(a => a.puz == num).restrictions;
+            document.getElementById("challenge").innerHTML = `<b>Challenge</b>: solve without <code>${restr}</code>`
+            if (![...restr].some(c => query.includes(c)) && result == 10) {
+                document.getElementById("frame-" + num).classList.remove("complete");
+                document.getElementById("frame-" + num).classList.add("challengecomplete");
+                markChallengeComplete(num);
+            }
+            if (challengecompleted.includes(num)) {
+                document.getElementById("challenge").innerHTML += "✅";
+            }
+        }
     } catch (e) {
-        console.log(e)
+        console.log(e.message)
         if (e.message == "explode") {
             ans.innerHTML = "<abbr title='precision too high!'>💥</abbr>"
-        } 
-        else if (e.message = "infinity") {
+        }
+        else if (e.message == "infinity") {
             ans.textContent = "♾️";
         }
         else {

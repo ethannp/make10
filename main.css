@@ -140,6 +140,14 @@ details {
     background-color: rgb(222, 255, 225);
 }
 
+.challengecomplete {
+    border: 1px solid rgb(212, 147, 255);
+    box-shadow: 0 0 10px rgba(255, 136, 255, 0.507);
+}
+.puzzle.challengecomplete {
+    background-color: rgb(241, 222, 255);
+}
+
 #options {
     border: 1px solid black;
     padding: 10px;
@@ -159,4 +167,8 @@ details {
 
 abbr {
     text-decoration: none;
+}
+
+#challenge {
+    color: red;
 }

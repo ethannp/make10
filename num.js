@@ -3,11 +3,6 @@ if(isNaN(num) || num == undefined || num == null || num < 0 || num > 9999) {
     window.location.replace("404.html")
 }
 num = String(num).padStart(4, '0');
-let completed;
-try { completed = localStorage.getItem("make10-complete").split(",") }
-catch (e) {
-    completed = [];
-}
 document.title = "make10 | puzzle " + num + (completed.includes(num) ? "✅": "");
 document.getElementById("title").textContent = "puzzle " + num + (completed.includes(num) ? "✅": "");
 document.getElementById("all").innerHTML += `<div class="temp" id="make-${num}"></div>`

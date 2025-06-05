@@ -1,10 +1,5 @@
 
 let list = [...Array(10000).keys()].map(a => String(a).padStart(4, '0'));
-let completed;
-try { completed = localStorage.getItem("make10-complete").split(",") }
-catch (e) {
-    completed = [];
-}
 
 const itemWidth = 80;
 const itemHeight = 40;
@@ -38,8 +33,10 @@ function render() {
             let num = String(list[index]).padStart(4, '0');
             const span = document.createElement('a');
             span.className = 'puzzle';
-            if (completed.includes(num)) {
-                span.classList.add("complete")
+            if (challengecompleted.includes(num)) {
+                span.classList.add("challengecomplete")
+            } else if (completed.includes(num)) {
+                span.classList.add("complete");
             }
             span.id = "puz-" + num;
             span.href = `puzzle.html?num=${num}`
@@ -63,6 +60,7 @@ Array.from(document.querySelectorAll('input[type=checkbox]')).forEach(input => {
 let hidecompleted = document.getElementById("hidecompleted");
 let hideunsolved = document.getElementById("hideunsolved");
 let recommended = document.getElementById("recommended");
+let haschallenge = document.getElementById("has-challenge");
 let random = document.getElementById("random");
 let search = document.getElementById("search");
 search.addEventListener("input", function() {
@@ -83,10 +81,11 @@ try{
     if (prefs[3] == "1") {
         random.checked = true;
     }
+    if (prefs[4] == "1") {
+        haschallenge.checked = true;
+    }
 }
-catch(e) {localStorage.setItem("make10-prefs", "0000")}
-
-let recommendedpuzzles = ['0004', '1111', '1254', '2253', '3451', '3565', '2542', '3332', '4367', '4658', '4851','7072', '7585', '8235']
+catch(e) {localStorage.setItem("make10-prefs", "00000")}
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -99,7 +98,7 @@ function shuffle(array) {
 
 function checkbox() {
     list = [...Array(10000).keys()].map(a => String(a).padStart(4, '0'));
-    let prefs = [0, 0, 0, 0]
+    let prefs = [0, 0, 0, 0, 0]
     search.value = search.value.replace(/[^0-9#]/g,"");
     if (search.value != "") {
         list = list.filter(x => x.match(new RegExp(search.value.replace(/#/g,"[0-9]"), "i")))
@@ -115,6 +114,10 @@ function checkbox() {
     if (recommended.checked) {
         list = list.filter(x => recommendedpuzzles.includes(x));
         prefs[2] = 1;
+    }
+    if (haschallenge.checked) {
+        list = list.filter(x => challenge.some(a => a.puz == x));
+        prefs[4] = 1;
     }
     if (random.checked) {
         shuffle(list)
