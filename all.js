@@ -86,7 +86,7 @@ try{
 }
 catch(e) {localStorage.setItem("make10-prefs", "0000")}
 
-let recommendedpuzzles = ['0004', '1111', '1254', '2253', '3451', '3565', '4225', '4367', '4658', '4851','7072', '7524']
+let recommendedpuzzles = ['0004', '1111', '1254', '2253', '3451', '3565', '2542', '3332', '4367', '4658', '4851','7072', '7585', '8235']
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
