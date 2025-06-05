@@ -156,3 +156,7 @@ details {
     display: inline-block;
     padding-bottom: 6px;
 }
+
+abbr {
+    text-decoration: none;
+}

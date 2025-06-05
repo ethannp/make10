@@ -67,11 +67,17 @@ function calc(num) {
         if (result == NaN) {
             throw "nan";
         }
-        if (result == "Infinity" || result > 1e15 || result < -1e15) {
+        if (result == "Infinity") {
             ans.textContent = "♾️";
             return;
         }
-        ans.textContent = Math.round(result * 1000) / 1000;
+        if (result > 1e15 || result < -(1e15)) {
+            ans.innerHTML = "<abbr title='precision too high!'>💥</abbr>";
+            return;
+        }
+        let trunc = Math.trunc(result * 1000) / 1000;
+        console.log(result);
+        ans.textContent = trunc === result ? result : trunc.toFixed(3) + "…";
         if (result == 10) {
             ans.textContent = "10✅"
             document.getElementById("frame-" + num).classList.add("complete");
@@ -81,7 +87,16 @@ function calc(num) {
         }
     } catch (e) {
         console.log(e)
-        ans.textContent = "❓"
+        if (e.message == "explode") {
+            ans.innerHTML = "<abbr title='precision too high!'>💥</abbr>"
+        } 
+        else if (e.message = "infinity") {
+            ans.textContent = "♾️";
+        }
+        else {
+            ans.textContent = "❓"
+        }
+
     }
 }
 
