@@ -67,7 +67,7 @@ function calc(num) {
         if (result == NaN) {
             throw "nan";
         }
-        if (result == "Infinity" || result > 1e15) {
+        if (result == "Infinity" || result > 1e15 || result < -1e15) {
             ans.textContent = "♾️";
             return;
         }
