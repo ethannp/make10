@@ -291,6 +291,12 @@
                             return e.times(t);
                         },
                         pow: function(x, y) {
+                            if (x.equals(new Decimal(1))) {
+                                return x;
+                            }
+                            if (y.equals(new Decimal(0))) {
+                                return new Decimal(1);
+                            }
                             if (y.abs().greaterThan(new Decimal(20))) throw new Error("explode");
                             const result = x.pow(y); // Result will be a Decimal
                             if (result.abs().lessThan(new Decimal('1e-9')) && !x.equals(new Decimal(0))) throw new Error("explode");
