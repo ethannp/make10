@@ -269,6 +269,7 @@
                         },
                         div: function (e, t) {
                             if (t.equals(new Decimal(0))) throw new Error("infinity");
+                            if (e.equals(new Decimal(0))) return e;
                             if (t.abs().greaterThan(new Decimal('1e9'))) throw new Error("explode");
                             if (t.abs().lessThan(new Decimal('1e-9')) && !t.equals(new Decimal(0))) throw new Error("explode"); // Added !t.equals(0) to handle exact zero
                             return e.dividedBy(t);
