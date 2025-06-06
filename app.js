@@ -1,16 +1,20 @@
 const mexp = new Mexp();
 let multivars = [false, false, false, false];
 
-let completed;
-try { completed = localStorage.getItem("make10-complete").split(",") }
-catch (e) {
-    completed = [];
+let completed, challengecompleted;
+
+
+function refetchCompleted() {
+    try { completed = localStorage.getItem("make10-complete").split(",") }
+    catch (e) {
+        completed = [];
+    }
+    try { challengecompleted = localStorage.getItem("make10-challengecomplete").split(",") }
+    catch (e) {
+        challengecompleted = [];
+    }
 }
-let challengecompleted;
-try { challengecompleted = localStorage.getItem("make10-challengecomplete").split(",") }
-catch (e) {
-    challengecompleted = [];
-}
+refetchCompleted();
 
 function makeFrame(n) {
     let num = String(n).padStart(4, '0');
@@ -51,6 +55,7 @@ function makeFrame(n) {
 }
 
 function markComplete(n) {
+    refetchCompleted();
     let num = String(n).padStart(4, '0');
     if (!completed.includes(num)) {
         completed.push(num);
@@ -63,6 +68,7 @@ function markComplete(n) {
 }
 
 function markMultiComplete(ns, num) {
+    refetchCompleted();
     if (!completed.includes(num)) {
         //console.log(num);
         try { document.getElementById("title").innerHTML += "✅" }

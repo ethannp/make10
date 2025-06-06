@@ -8,6 +8,7 @@ const itemMargin = 8;
 const container = document.getElementById('scroll-container');
 const content = document.getElementById('content');
 function render() {
+    refetchCompleted();
     const availableWidth = container.clientWidth - 20;
     const fullItemWidth = itemWidth + 2 * itemMargin;
     const columns = Math.floor(availableWidth / fullItemWidth);
@@ -156,6 +157,7 @@ let ctx = canvas.getContext('2d');
 
 
 function drawCanvas() {
+    refetchCompleted();
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, 100 * SCALE, 100 * SCALE);
     ctx.fillStyle = '#02d91f';

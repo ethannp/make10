@@ -24,6 +24,7 @@ document.getElementById("all").innerHTML += `
 </details>
 `
 function updateCanvas() {
+    refetchCompleted();
     let canvas = document.createElement("canvas")
     canvas.width = 100 * SCALE;
     canvas.height = 100 * SCALE;
