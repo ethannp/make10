@@ -149,7 +149,7 @@
                     T--, (O = h), (R = s), A.push(U), a(c, 1);
                 } else if (g === t.DECIMAL) {
                     if (S.hasDec) throw new Error("Two decimals are not allowed in one number");
-                    S.type !== t.NUMBER && ((S = { show: "0", value: "0", type: t.NUMBER, precedence: 0 }), A.push(S)), (O = p), a(c, 1), (R = u), (S.value += C), (S.hasDec = !0); // Keep value as string for decimals
+                    S.type !== t.NUMBER && ((S = { show: "0", value: "0", type: t.NUMBER, precedence: 0 }), A.push(S), a(c, -1)), (O = p), a(c, 1), (R = u), (S.value += C), (S.hasDec = !0); // Keep value as string for decimals
                 } else g === t.POSTFIX_FUNCTION_WITH_ONE_ARG && ((O = h), (R = s), a(c, 1), A.push(U));
                 g === t.FUNCTION_WITH_N_ARGS
                     ? ((O = o), (R = u), a(c, P.numberOfArguments + 2), A.push(U), w[E + 1].type !== t.OPENING_PARENTHESIS && (A.push(y), c.push(P.numberOfArguments + 2)))
@@ -159,7 +159,7 @@
                               ? ((S.value = C), (S.show = k), a(c, 1))
                               : S.value === this.math.sub && "-" === k && ((S.value = this.math.add), (S.show = "+"), a(c, 1))
                           : S.type !== t.CLOSING_PARENTHESIS && S.type !== t.POSTFIX_FUNCTION_WITH_ONE_ARG && S.type !== t.NUMBER && S.type !== t.CONSTANT && S.type !== t.EVALUATED_FUNCTION_PARAMETER
-                          ? "-" === M && ((O = o), (R = u), a(c, 1).push(2), A.push(v), A.push(y))
+                          ? "-" === M && ((O = o), (R = u), a(c, 1), c.push(2), A.push(v), A.push(y))
                           : (A.push(U), a(c, 2)),
                       (O = o),
                       (R = u))

@@ -1,9 +1,10 @@
 code {
     background-color: rgba(240, 240, 240, 1);
-    padding: 3px;
+    padding: 0px 3px;
     border-radius: 3px;
     border: 1px solid gray;
     white-space: nowrap;
+    font-family: 'Fira Code', 'monospace';
 }
 
 .all, .full {
@@ -27,6 +28,9 @@ code {
     top: 50%;
     margin-top: -250px;
 }
+.vcenter:has(details[open]) {
+    padding-bottom: 450px;
+}
 
 .temp {
     margin-bottom: 20px;
@@ -44,10 +48,11 @@ code {
 
 .num {
     font-size: 40px;
-    line-height: 50px;
+    line-height: 40px;
+    height: 50px;
     vertical-align: middle;
-    padding: 0 3px;
-    margin: 0;
+    padding: 0 0px;
+    margin: 0 3px;
 }
 
 .ans {
@@ -80,7 +85,7 @@ code {
     display: block;
     visibility: hidden;
     white-space: pre;
-    min-width: 6px;
+    min-width: 10px;
 }
     
 .resize-input {
@@ -94,8 +99,8 @@ code {
 }
 
 summary {
-    color: grey;
     text-align: center;
+    color: gray;
 }
 
 details {
@@ -148,6 +153,11 @@ details {
     background-color: rgb(241, 222, 255);
 }
 
+.multicomplete {
+    border: 1px solid rgb(122, 133, 255);
+    box-shadow: 0 0 10px rgba(117, 133, 255, 0.507);
+}
+
 #options {
     border: 1px solid black;
     padding: 10px;
@@ -170,7 +180,7 @@ abbr {
 }
 
 #challenge {
-    color: red;
+    color: rgb(209, 67, 249);
 }
 
 label {
@@ -179,4 +189,43 @@ label {
 
 li {
     padding-bottom: 5px;
+}
+
+.settingsmenu {
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid black;
+    padding: 10px;
+    background-color: rgb(247, 247, 247);
+    margin-bottom: 20px;
+}
+
+.settingsmenu label {
+    margin-top: 5px;
+    display: block;
+    
+}
+
+#progress {
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.multi {
+    border: 1px dashed blue;
+    border-radius: 3px;
+}
+
+.var {
+    color: blue;
+    background-color: rgb(244, 244, 255);
+}
+
+.multi:hover {
+    cursor: pointer;
+}
+
+ul {
+    margin: 5px;
 }

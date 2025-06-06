@@ -1,2 +1,3 @@
-const recommendedpuzzles = ['0004', '1111', '1254', '2253', '3451', '3565', '2542', '3332', '4367', '4658', '4851', '5246', '7072', '7585', '8235', '8432', '8456']
+const recommendedpuzzles = ['0004', '1111', '1254', '2253', '2551', '3451', '3565', '2542', '3332', '4367', '4658', '4851', '5246', '7072', '7585', '8235', '8432', '8456']
 const challenge = [{puz: '3332', restrictions: '+-'}, {puz: '8235', restrictions: '+-'}, {puz: '8432', restrictions: '+-'}]
+const DEFAULT_SETTINGS = "0000000" // unsolved, completed, recommended, random, has-challenge, includerandom, multisolve

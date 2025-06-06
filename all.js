@@ -63,11 +63,11 @@ let recommended = document.getElementById("recommended");
 let haschallenge = document.getElementById("has-challenge");
 let random = document.getElementById("random");
 let search = document.getElementById("search");
-search.addEventListener("input", function() {
+search.addEventListener("input", function () {
     checkbox();
 })
 
-try{
+try {
     let prefs = localStorage.getItem("make10-prefs");
     if (prefs[0] == "1") {
         hidecompleted.checked = true;
@@ -85,43 +85,63 @@ try{
         haschallenge.checked = true;
     }
 }
-catch(e) {localStorage.setItem("make10-prefs", "00000")}
+catch (e) { localStorage.setItem("make10-prefs", DEFAULT_SETTINGS) }
 
 function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 
 function checkbox() {
     list = [...Array(10000).keys()].map(a => String(a).padStart(4, '0'));
-    let prefs = [0, 0, 0, 0, 0]
-    search.value = search.value.replace(/[^0-9#]/g,"");
+    let prefs;
+    try {
+        prefs = localStorage.getItem("make10-prefs");
+        if (prefs.length < DEFAULT_SETTINGS.length) {
+            prefs.padEnd(DEFAULT_SETTINGS.length, '0');
+        }
+    }
+    catch (e) {
+        prefs = DEFAULT_SETTINGS;
+    }
+    prefs = prefs.split("");
+    search.value = search.value.replace(/[^0-9#]/g, "");
     if (search.value != "") {
-        list = list.filter(x => x.match(new RegExp(search.value.replace(/#/g,"[0-9]"), "i")))
+        list = list.filter(x => x.match(new RegExp(search.value.replace(/#/g, "[0-9]"), "i")))
     }
     if (hidecompleted.checked) {
         list = list.filter(x => !completed.includes(x));
-        prefs[0] = 1;
+        prefs[0] = '1';
+    } else {
+        prefs[0] = '0'
     }
     if (hideunsolved.checked) {
         list = list.filter(x => completed.includes(x));
-        prefs[1] = 1;
+        prefs[1] = '1';
+    } else {
+        prefs[1] = '0'
     }
     if (recommended.checked) {
         list = list.filter(x => recommendedpuzzles.includes(x));
-        prefs[2] = 1;
+        prefs[2] = '1';
+    } else {
+        prefs[2] = '0'
     }
     if (haschallenge.checked) {
         list = list.filter(x => challenge.some(a => a.puz == x));
-        prefs[4] = 1;
+        prefs[4] = '1';
+    } else {
+        prefs[4] = '0'
     }
     if (random.checked) {
         shuffle(list)
-        prefs[3] = 1;
+        prefs[3] = '1';
+    } else {
+        prefs[3] = '0'
     }
     localStorage.setItem("make10-prefs", prefs.join(""));
     document.getElementById("completedcount").textContent = "Results: " + list.filter(x => completed.includes(x)).length + "/" + list.length;

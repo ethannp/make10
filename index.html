@@ -20,7 +20,9 @@
     <body>
         <div class="all" id="all">
             <h1>make10</h1>
-            <p>your goal is to make a mathematical expression that equals 10 using four numbers in order. allowed characters: <code>+-*/().^!</code>.</p>
+            <p>your goal is to make a mathematical expression that equals 10
+                using four numbers in order. allowed characters:
+                <code>+-*/().^!</code>.</p>
             <p>try these to start out!</p>
             <div class="temp" id="make-1234"></div>
             <div class="temp" id="make-4211"></div>
@@ -28,13 +30,39 @@
             <p>next, you can try <a href="all.html">all the numbers</a>!</p>
             <details>
                 <summary>technical notes</summary>
-                <ul>
-                    <li>not all puzzles are solvable.</li>
-                    <li>0^0 = 1 and 0! = 1. </li>
-                    <li>the calculator is an edited version of <a href="https://github.com/bugwheels94/math-expression-evaluator#readme" target="_blank">math-expression-evaluator</a> to use <a href="https://mikemcl.github.io/decimal.js/" target="_blank">decimal.js</a>. this change was vibe coded with google gemini.</li>
-                    <li>💥means that the numbers are too large or require too many digits of precision. this is to avoid lag spikes in calculations.</li>
-                    <li>message me on discord @flfff for comments, suggestions, or fun puzzles!</li>
-                </ul>
+                <div class="settingsmenu">
+                    <ul>
+                        <li>not all puzzles are solvable.</li>
+                        <li>0^0 = 1 and 0! = 1. </li>
+                        <li>the calculator is an edited version of <a
+                                href="https://github.com/bugwheels94/math-expression-evaluator#readme"
+                                target="_blank">math-expression-evaluator</a> to
+                            use
+                            <a href="https://mikemcl.github.io/decimal.js/"
+                                target="_blank">decimal.js</a>. this change was
+                            vibe
+                            coded with google gemini.</li>
+                        <li>💥means that the numbers are too large or require
+                            too
+                            many digits of precision. this is to avoid lag
+                            spikes in
+                            calculations.</li>
+                        <li>message me on discord @flfff for comments,
+                            suggestions,
+                            or fun puzzles!</li>
+                    </ul>
+                </div>
+            </details>
+            <details>
+                <summary>changelog</summary>
+                <div class="settingsmenu">
+                    <ul>
+                        <li>6/6/2025: added multisolve mode and progress pictures</li>
+                        <li>6/5/2025: switched to arbitrary precision arithmetic
+                        </li>
+                        <li>6/4/2025: release date!</li>
+                    </ul>
+                </div>
             </details>
         </div>
     </body>
