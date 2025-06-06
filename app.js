@@ -158,6 +158,8 @@ function calc(num) {
     }
     query += document.getElementById("i5" + "-" + num).value;
     if (multivars.some(a => a)) { //MULTI ON
+        document.getElementById("frame-" + num).classList.remove("complete");
+        document.getElementById("frame-" + num).classList.remove("challengecomplete");
         // create all possible queries
         try {
             let queries = generateAllQueries(query);
@@ -201,10 +203,12 @@ function calc(num) {
             else {
                 ans.textContent = "❓"
             }
+            document.getElementById("frame-" + num).classList.remove("multicomplete");
         }
 
     } else {
         //MULTI OFF
+        document.getElementById("frame-" + num).classList.remove("multicomplete");
         try {
             let result = mexp.eval(query);
             if (isNaN(result)) {
@@ -225,6 +229,7 @@ function calc(num) {
                 markComplete(num);
             } else {
                 document.getElementById("frame-" + num).classList.remove("complete");
+                document.getElementById("frame-" + num).classList.remove("challengecomplete");
             }
             if ((result == 10 || completed.includes(num)) && challenge.some(a => a.puz == num)) {
                 const restr = challenge.find(a => a.puz == num).restrictions;
@@ -249,6 +254,8 @@ function calc(num) {
             else {
                 ans.textContent = "❓"
             }
+            document.getElementById("frame-" + num).classList.remove("complete");
+            document.getElementById("frame-" + num).classList.remove("challengecomplete");
         }
     }
 }
