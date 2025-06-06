@@ -10,15 +10,15 @@ makeFrame(num);
 
 const SCALE = 3;
 
-document.getElementById("all").innerHTML += `<a class='space' id='randompuzzle'>🎲random puzzle</a><br/>`
-document.getElementById("all").innerHTML += `<a class='space' href="all.html">all puzzles</a><br/>`
-document.getElementById("all").innerHTML += `<a class='space' href="index.html">how to play?</a>`
-document.getElementById("all").innerHTML += `<details style='margin-bottom: 20px'>
-<summary>Settings</summary>
+document.getElementById("all").innerHTML += `
+<a class='space' id='next'>▶️next</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='nextunsolved'>⏩next unsolved</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='randompuzzle'>🎲random puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a><br/>
+<a class='space' href="index.html">how to play?</a>
+<details style='margin-bottom: 20px'>
+<summary>settings</summary>
 <div class="settingsmenu">
-<label for="cnewrandom"><input type="checkbox" id="cnewrandom">Random includes solved puzzles</label>
-<label for="cmultisolve"><input type="checkbox" id="cmultisolve">Multisolve mode</label>
-<p style="color: grey; margin-top: 0">Multisolve mode allows you to solve multiple puzzles at once. Click a number to toggle it to 'variable' mode. Then, puzzles will only be solved if all queries with <i>every</i> number [0-9] filling <i>every</i> variable evaluates to 10.</p>
+<label for="cnewrandom"><input type="checkbox" id="cnewrandom">random includes solved puzzles</label>
+<label for="cmultisolve"><input type="checkbox" id="cmultisolve">multisolve mode</label>
+<p style="color: grey; margin-top: 0">multisolve mode allows you to solve multiple puzzles at once. click a number to toggle it to 'variable' mode. then, puzzles will only be solved if all queries with <i>every</i> number [0-9] filling <i>every</i> variable evaluates to 10.</p>
 <img id="progress" style="image-rendering: pixelated;"/>
 </div>
 </details>
@@ -44,9 +44,22 @@ function updateCanvas() {
 }
 updateCanvas();
 
-function multisolve() {
-
+if (num == 9999) {
+    document.getElementById("next").href = `puzzle.html?num=0000`;
+} else {
+    document.getElementById("next").href = `puzzle.html?num=${parseInt(num) + 1}`;
 }
+let nextunsolved = parseInt(num) + 1;
+if (nextunsolved == 10000) {
+    nextunsolved = 0;
+}
+while (completed.includes(String(nextunsolved).padStart(4, '0'))) {
+    nextunsolved++;
+    if (nextunsolved == 10000) {
+        nextunsolved = 0;
+    }
+}
+document.getElementById("nextunsolved").href = `puzzle.html?num=${nextunsolved}`;
 
 let cmultisolve = document.getElementById("cmultisolve");
 let cnewrandom = document.getElementById("cnewrandom");

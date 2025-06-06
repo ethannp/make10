@@ -7,7 +7,8 @@ code {
     font-family: 'Fira Code', 'monospace';
 }
 
-.all, .full {
+.all,
+.full {
     max-width: 1000px;
     margin: auto;
     width: 95%;
@@ -28,6 +29,7 @@ code {
     top: 50%;
     margin-top: -250px;
 }
+
 .vcenter:has(details[open]) {
     padding-bottom: 450px;
 }
@@ -87,7 +89,7 @@ code {
     white-space: pre;
     min-width: 10px;
 }
-    
+
 .resize-input {
     text-align: center;
     position: absolute;
@@ -149,6 +151,7 @@ details {
     border: 1px solid rgb(212, 147, 255);
     box-shadow: 0 0 10px rgba(255, 136, 255, 0.507);
 }
+
 .puzzle.challengecomplete {
     background-color: rgb(241, 222, 255);
 }
@@ -203,7 +206,7 @@ li {
 .settingsmenu label {
     margin-top: 5px;
     display: block;
-    
+
 }
 
 #progress {
@@ -228,4 +231,27 @@ li {
 
 ul {
     margin: 5px;
+}
+
+#canvascontainer {
+    padding: 20px;
+    margin: 20px auto;
+    background-color: rgb(247, 247, 247);
+    width: fit-content;
+    height: fit-content;
+    box-sizing: content-box;
+    border: 1px solid black;
+}
+
+#canvaslabel {
+    margin: 0 0 10px 0;
+    line-height: 1.2rem;
+}
+
+#allselector {
+    cursor: pointer;
+}
+
+canvas {
+    image-rendering: pixelated;
 }

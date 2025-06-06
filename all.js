@@ -144,8 +144,66 @@ function checkbox() {
         prefs[3] = '0'
     }
     localStorage.setItem("make10-prefs", prefs.join(""));
-    document.getElementById("completedcount").textContent = "Results: " + list.filter(x => completed.includes(x)).length + "/" + list.length;
+    document.getElementById("completedcount").textContent = "results: " + list.filter(x => completed.includes(x)).length + "/" + list.length;
     render();
 }
 
 checkbox();
+
+const SCALE = 4;
+let canvas = document.getElementById("allselector")
+let ctx = canvas.getContext('2d');
+
+
+function drawCanvas() {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, 100 * SCALE, 100 * SCALE);
+    ctx.fillStyle = '#02d91f';
+    completed.forEach(n => {
+        ctx.fillRect((n % 100) * SCALE, (Math.floor(n / 100)) * SCALE, SCALE, SCALE);
+    })
+    ctx.fillStyle = '#ff3be5';
+    challengecompleted.forEach(n => {
+        ctx.fillRect((n % 100) * SCALE, (Math.floor(n / 100)) * SCALE, SCALE, SCALE);
+    });
+}
+drawCanvas();
+
+let x, y;
+canvas.addEventListener('mousemove', function (ev) {
+    drawCanvas();
+    x = Math.floor(ev.clientX - canvas.getBoundingClientRect().left);
+    y = Math.floor(ev.clientY - canvas.getBoundingClientRect().top);
+    let id = Math.floor(y / SCALE) * 100 + Math.floor(x / SCALE);
+    let idstring = String(id).padStart(4, '0');
+    if (id <= 0) {
+        document.getElementById("canvaslabel").innerHTML = `hover below!`
+        return;
+    }
+    document.getElementById("canvaslabel").innerHTML = `go to puzzle ${id} ${completed.includes(idstring) ? (challengecompleted.includes(idstring) ? "✅✅" : "✅") : ""}`;
+    ctx.fillStyle = 'black'
+    ctx.fillRect(Math.floor(x / SCALE) * SCALE, Math.floor(y / SCALE) * SCALE, SCALE, SCALE);
+    if (challengecompleted.includes(idstring)) {
+        ctx.fillStyle = '#ff3be5';
+    } else if (completed.includes(idstring)) {
+        ctx.fillStyle = '#02d91f';
+    } else {
+        ctx.fillStyle = 'white';
+    }
+    ctx.fillRect(Math.floor(x / SCALE) * SCALE + 1, Math.floor(y / SCALE) * SCALE + 1, SCALE - 2, SCALE - 2);
+})
+canvas.addEventListener('mouseleave', function (ev) {
+    drawCanvas();
+    document.getElementById("canvaslabel").innerHTML = `hover below!`
+})
+canvas.addEventListener('click', function (ev) {
+    x = Math.floor(ev.clientX - canvas.getBoundingClientRect().left);
+    y = Math.floor(ev.clientY - canvas.getBoundingClientRect().top);
+    let id = Math.floor(y / 4) * 100 + Math.floor(x / 4);
+    if (id <= 0) {
+        return;
+    }
+    let a = document.createElement("a");
+    a.href = `puzzle.html?num=${id}`
+    a.click();
+})

@@ -64,7 +64,7 @@ function markComplete(n) {
 
 function markMultiComplete(ns, num) {
     if (!completed.includes(num)) {
-        console.log(num);
+        //console.log(num);
         try { document.getElementById("title").innerHTML += "✅" }
         catch (err) { }
     }
@@ -104,7 +104,7 @@ function handle(e) {
 }
 
 function enableMultisolve() {
-    console.log("ENABLING MULTI")
+    //console.log("ENABLING MULTI")
     for (let i = 0; i <= 3; i++) {
         let multinum = document.getElementById(`n${i + 1}-${num}`);
         multinum.classList.add("multi");
@@ -113,7 +113,7 @@ function enableMultisolve() {
 }
 
 function disableMultisolve() {
-    console.log("DISABLING MULTI")
+    //console.log("DISABLING MULTI")
     multivars = [false, false, false, false];
     for (let i = 0; i <= 3; i++) {
         let multinum = document.getElementById(`n${i + 1}-${num}`);
@@ -244,7 +244,7 @@ function calc(num) {
                 }
             }
         } catch (e) {
-            console.log(e.message)
+            console.log(e)
             if (e.message == "explode") {
                 ans.innerHTML = "💥"
             }
