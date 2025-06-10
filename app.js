@@ -199,7 +199,7 @@ function calc(num) {
     }
     query += document.getElementById("i5" + "-" + num).value;
     if (sandbox) {
-        window.history.replaceState({}, '', `/sandbox.html?num=${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}&query=${getSandboxLink()}`);
+        window.history.replaceState({}, '', `sandbox.html?num=${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}&query=${getSandboxLink()}`);
         try {
             document.getElementById("linktopuz").href = `puzzle.html?num=${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}&query=${getSandboxLink()}`;
             document.getElementById("linktopuz").textContent = `🧩puzzle ${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}`;
