@@ -2,17 +2,27 @@ let num = parseInt(new URLSearchParams(window.location.search).get("num"));
 if (isNaN(num) || num == undefined || num == null || num < 0 || num > 9999) {
     window.location.replace("404.html")
 }
+let queryLink = [];
+try {
+    queryLink = (new URLSearchParams(window.location.search).get("query")).split("_").map(a => a.replace(/a/g, '+').replace(/s/g, '-').replace(/m/g, '*').replace(/d/g, '/').replace(/e/g, '^').replace(/l/g, '(').replace(/r/g, ')').replace(/p/g, '.').replace(/f/g, '!').replace(/[^-+*/().!\^]/g, ""));
+} catch (e) { }
 num = String(num).padStart(4, '0');
 document.title = "make10 | puzzle " + num + (completed.includes(num) ? "✅" : "");
-document.getElementById("title").textContent = "puzzle " + num + (completed.includes(num) ? "✅" : "");
+let info = getPuzzleInfo(num);
+if (info) {
+    document.getElementById("title").innerHTML = `<span style='position:relative; display: inline-block'><span class='tooltip' data-tooltip='recommended by ${info.author}'>${info.emoji}</span></span>`+  "puzzle " + num + (completed.includes(num) ? "✅" : "");
+} else {
+    document.getElementById("title").textContent = "puzzle " + num + (completed.includes(num) ? "✅" : "");
+}
 document.getElementById("all").innerHTML += `<div class="temp" id="make-${num}"></div>`
 makeFrame(num);
 
 const SCALE = 3;
 
 document.getElementById("all").innerHTML += `
-<a class='space' id='next'>▶️next</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='nextunsolved'>⏩next unsolved</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='randompuzzle'>🎲random puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a><br/>
-<a class='space' href="index.html">how to play?</a>
+<a class='space' id='next'>▶️next</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='nextunsolved'>⏩next unsolved</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='randompuzzle'>🎲random puzzle</a><br/>
+<a class='space' href="all.html">🗃️all puzzles</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='sandbox' href="sandbox.html">🪣sandbox</a><br/>
+<a class='space' href="index.html">❓how to play</a>
 <details style='margin-bottom: 20px'>
 <summary>settings</summary>
 <div class="settingsmenu">
@@ -45,22 +55,32 @@ function updateCanvas() {
 }
 updateCanvas();
 
-if (num == 9999) {
-    document.getElementById("next").href = `puzzle.html?num=0000`;
-} else {
-    document.getElementById("next").href = `puzzle.html?num=${parseInt(num) + 1}`;
-}
-let nextunsolved = parseInt(num) + 1;
-if (nextunsolved == 10000) {
-    nextunsolved = 0;
-}
-while (completed.includes(String(nextunsolved).padStart(4, '0'))) {
-    nextunsolved++;
+function updateNextUnsolved() {
+    refetchCompleted();
+    if (num == 9999) {
+        document.getElementById("next").href = `puzzle.html?num=0000`;
+    } else {
+        document.getElementById("next").href = `puzzle.html?num=${parseInt(num) + 1}`;
+    }
+    let nextunsolved = parseInt(num) + 1;
     if (nextunsolved == 10000) {
         nextunsolved = 0;
     }
+    while (completed.includes(String(nextunsolved).padStart(4, '0'))) {
+        nextunsolved++;
+        if (nextunsolved == 10000) {
+            nextunsolved = 0;
+        }
+    }
+    document.getElementById("nextunsolved").href = `puzzle.html?num=${nextunsolved}`;
 }
-document.getElementById("nextunsolved").href = `puzzle.html?num=${nextunsolved}`;
+updateNextUnsolved();
+
+function updateSandboxLink() {
+    document.getElementById('sandbox').href = `sandbox.html?num=${num}&query=${getSandboxLink()}`;
+}
+
+updateSandboxLink();
 
 let cmultisolve = document.getElementById("cmultisolve");
 let cnewrandom = document.getElementById("cnewrandom");
@@ -123,3 +143,8 @@ try {
 catch (e) { localStorage.setItem("make10-prefs", DEFAULT_SETTINGS) }
 
 settingsCheckbox();
+
+for (let i = 1; i <= 5; i++) {
+    document.getElementById(`i${i}-${num}`).value = queryLink[i - 1];
+    document.getElementById(`i${i}-${num}`).dispatchEvent(new Event('input', { bubbles: true }))
+}

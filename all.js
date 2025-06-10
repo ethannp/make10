@@ -43,7 +43,13 @@ function render() {
             span.href = `puzzle.html?num=${num}`
             span.style.top = `${row * fullItemHeight + itemMargin}px`;
             span.style.left = `${col * (itemWidth + 2 * itemMargin) + itemMargin}px`;
-            span.textContent = (recommendedpuzzles.includes(num) ? "⭐" : "") + `${num}`;
+            let info = getPuzzleInfo(num);
+            if (info) {
+                span.textContent = `${info.emoji}${num}`;
+                span.title = `recommended by ${info.author}`;
+            } else {
+                span.textContent = `${num}`;
+            }
             content.appendChild(span);
         }
     }
@@ -127,7 +133,12 @@ function checkbox() {
         prefs[1] = '0'
     }
     if (recommended.checked) {
-        list = list.filter(x => recommendedpuzzles.includes(x));
+        list = list.filter(x => recommendedpuzzles.some(a => a.puzzles.includes(x)));
+        list.sort((a, b) => {
+            const groupa = recommendedpuzzles.findIndex(g => g.puzzles.includes(a));
+            const groupb = recommendedpuzzles.findIndex(g => g.puzzles.includes(b));
+            return groupa - groupb;
+        })
         prefs[2] = '1';
     } else {
         prefs[2] = '0'
@@ -151,7 +162,13 @@ function checkbox() {
 
 checkbox();
 
-const SCALE = 4;
+let SCALE;
+if (window.innerWidth < 400) {
+    SCALE = 3;
+} else {
+    SCALE = 4;
+}
+document.getElementById("canvascontainer").innerHTML += `<canvas id="allselector" width="${SCALE * 100}" height="${SCALE * 100}"></canvas></div>`
 let canvas = document.getElementById("allselector")
 let ctx = canvas.getContext('2d');
 

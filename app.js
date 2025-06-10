@@ -1,5 +1,6 @@
 const mexp = new Mexp();
 let multivars = [false, false, false, false];
+let sandbox = false;
 
 let completed, challengecompleted;
 
@@ -78,6 +79,8 @@ function markMultiComplete(ns, num) {
     localStorage.setItem("make10-complete", completed.join(","))
     try { updateCanvas(); }
     catch (e) { }
+    try { updateNextUnsolved(); }
+    catch (e) { }
 }
 
 function markChallengeComplete(n) {
@@ -95,17 +98,25 @@ function formatAns(ans) {
     return trunc.equals(ans) ? ans : ans.toFixed(4) + "…";
 }
 
-function handle(e) {
-    const multinum = e.target;
-    const i = parseInt(multinum.getAttribute("data-index"));
-    multivars[i] = !multivars[i];
+function updateMultinum(multinum, i) {
     if (multivars[i]) { // variable mode
         multinum.textContent = "#";
         multinum.classList.add("var");
     } else { // number mode
-        multinum.textContent = num[i];
+        if (sandbox) {
+            multinum.textContent = document.getElementById("box-n" + (i+1)).value;
+        } else {
+            multinum.textContent = num[i];
+        }
         multinum.classList.remove("var");
     }
+}
+
+function handle(e) {
+    const multinum = e.target;
+    const i = parseInt(multinum.getAttribute("data-index"));
+    multivars[i] = !multivars[i];
+    updateMultinum(multinum, i);
     calc(num);
 }
 
@@ -154,8 +165,32 @@ function generateAllQueries(query) {
     return queries;
 }
 
+function getPuzzleInfo(n) {
+    for (const g in recommendedpuzzles) {
+        const group = recommendedpuzzles[g];
+        if (group.puzzles.includes(n)) {
+            return { author: group.author, emoji: group.emoji };
+        }
+    }
+    return null;
+}
+
+function getSandboxLink() {
+    let query = "";
+    for (let i = 1; i < 5; i++) {
+        query += document.getElementById("i" + i + "-" + num).value;
+        query += "#";
+    }
+    query += document.getElementById("i5" + "-" + num).value;
+    query = query.replace(/\+/g, 'a').replace(/\-/g, 's').replace(/\*/g, 'm').replace(/\//g, 'd').replace(/\^/g, 'e').replace(/\(/g, 'l').replace(/\)/g, 'r').replace(/\./g, 'p').replace(/\!/g, 'f').replace(/\#/g, '_');
+    return query;
+}
+
 
 function calc(num) {
+    refetchCompleted();
+    try { updateSandboxLink(); }
+    catch (e) { }
     let ans = document.getElementById("ans-" + num);
     let query = "";
     for (let i = 1; i < 5; i++) {
@@ -163,6 +198,14 @@ function calc(num) {
         query += document.getElementById("n" + i + "-" + num).textContent;
     }
     query += document.getElementById("i5" + "-" + num).value;
+    if (sandbox) {
+        window.history.replaceState({}, '', `/sandbox.html?num=${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}&query=${getSandboxLink()}`);
+        try {
+            document.getElementById("linktopuz").href = `puzzle.html?num=${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}&query=${getSandboxLink()}`;
+            document.getElementById("linktopuz").textContent = `🧩puzzle ${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}`;
+        }
+        catch (e) { }
+    }
     if (multivars.some(a => a)) { //MULTI ON
         document.getElementById("frame-" + num).classList.remove("complete");
         document.getElementById("frame-" + num).classList.remove("challengecomplete");
@@ -188,6 +231,8 @@ function calc(num) {
                 ans.textContent = "10✅"
                 document.getElementById("frame-" + num).classList.add("multicomplete");
                 markMultiComplete(queries.map(q => q.replace(/[^0-9]/g, "").padStart(4, '0')), num);
+                try { drawCanvas(); }
+                catch (e) { }
             } else {
                 document.getElementById("frame-" + num).classList.remove("multicomplete");
             }
@@ -232,12 +277,18 @@ function calc(num) {
             if (result == 10) {
                 ans.textContent = "10✅"
                 document.getElementById("frame-" + num).classList.add("complete");
-                markComplete(num);
+                if (sandbox) {
+                    markComplete(query.replace(/[^0-9]/g, ""));
+                    try { drawCanvas(); }
+                    catch (e) { }
+                } else {
+                    markComplete(num);
+                }
             } else {
                 document.getElementById("frame-" + num).classList.remove("complete");
                 document.getElementById("frame-" + num).classList.remove("challengecomplete");
             }
-            if ((result == 10 || completed.includes(num)) && challenge.some(a => a.puz == num)) {
+            if ((result == 10 || completed.includes(num)) && challenge.some(a => a.puz == num) && !sandbox) {
                 const restr = challenge.find(a => a.puz == num).restrictions;
                 document.getElementById("challenge").innerHTML = `<b>Challenge</b>: solve without <code>${restr}</code>!`
                 if (![...restr].some(c => query.includes(c)) && result == 10) {
@@ -262,6 +313,13 @@ function calc(num) {
             }
             document.getElementById("frame-" + num).classList.remove("complete");
             document.getElementById("frame-" + num).classList.remove("challengecomplete");
+        }
+    }
+    if (sandbox) {
+        if (completed.includes(`${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}`)) {
+            document.getElementById("sandbox-completed").textContent = "✅";
+        } else {
+            document.getElementById("sandbox-completed").textContent = "";
         }
     }
 }

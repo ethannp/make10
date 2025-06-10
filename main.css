@@ -7,6 +7,15 @@ code {
     font-family: 'Fira Code', 'monospace';
 }
 
+h1 {
+    line-height: 2em;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .all,
 .full {
     max-width: 1000px;
@@ -26,7 +35,7 @@ code {
 .vcenter {
     height: 500px;
     position: absolute;
-    top: 50%;
+    top: 45%;
     margin-top: -250px;
 }
 
@@ -254,4 +263,80 @@ ul {
 
 canvas {
     image-rendering: pixelated;
+}
+
+#sandbox-num-container {
+    margin-bottom: 50px;
+}
+
+.sandbox-num {
+    font-size: 40px;
+    line-height: 40px;
+    height: 50px;
+    vertical-align: middle;
+    padding: 0 0px;
+    margin: 0;
+    width: 30px;
+    text-align: center;
+}
+
+.sandbox-num-span {
+    position: relative;
+}
+
+.sandbox-num-span button {
+    position: absolute;
+    width: 33.2px;
+    height: 25px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.sandbox-num-span button:hover {
+    cursor: pointer;
+}
+
+.sandbox-num-span button:focus {
+    background-color: rgba(183, 192, 255, 0.507);
+}
+
+.up {
+    top: -40px;
+}
+
+
+.down {
+    left: 0;
+    top: 40px;
+}
+
+#sandbox-completed {
+    position: absolute;
+    font-size: 40px;
+}
+
+.sandbox-override {
+    height: 900px;
+}
+
+[data-tooltip]:hover::after {
+    display: block;
+    width: max-content;
+
+    position: absolute;
+    bottom: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-weight: normal;
+
+    content: attr(data-tooltip);
+    background: rgba(207, 224, 255, 0.507);
+    padding: 6px 10px;
+    font-size: 14px;
+    line-height: 14px;
+    border-radius: 2px;
 }

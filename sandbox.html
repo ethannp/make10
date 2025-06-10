@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>make10 | sandbox</title>
+        <meta name="description" content>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="main.css">
+        <script src="decimal.js"></script>
+        <script src="gemini-mexp-decimal.js"></script>
+        <script src="SPECIAL.js" defer></script>
+        <script src="app.js" defer></script>
+        <script src="sandbox.js" defer></script>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="all" id="all">
+                <h1>sandbox</h1>
+                <div id="sandbox-num-container">
+                    <span class="sandbox-num-span">
+                        <button class="up" data-index="1">⬆️</button>
+                        <input class="sandbox-num" data-index="1" id="box-n1" maxlength=1 autocomplete="off">
+                        <button class="down" data-index="1">⬇️</button>
+                    </span>
+                    <span class="sandbox-num-span">
+                        <button class="up" data-index="2">⬆️</button>
+                        <input class="sandbox-num" data-index="2" id="box-n2" maxlength=1 autocomplete="off">
+                        <button class="down" data-index="2">⬇️</button>
+                    </span>
+                    <span class="sandbox-num-span">
+                        <button class="up" data-index="3">⬆️</button>
+                        <input class="sandbox-num" data-index="3" id="box-n3" maxlength=1 autocomplete="off">
+                        <button class="down" data-index="3">⬇️</button>
+                    </span>
+                    <span class="sandbox-num-span">
+                        <button class="up" data-index="4">⬆️</button>
+                        <input class="sandbox-num" data-index="4" id="box-n4" maxlength=1 autocomplete="off">
+                        <button class="down" data-index="4">⬇️</button>
+                    </span>
+                    <span id="sandbox-completed"></span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
