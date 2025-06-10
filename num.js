@@ -10,7 +10,7 @@ num = String(num).padStart(4, '0');
 document.title = "make10 | puzzle " + num + (completed.includes(num) ? "✅" : "");
 let info = getPuzzleInfo(num);
 if (info) {
-    document.getElementById("title").innerHTML = `<span style='position:relative; display: inline-block'><span class='tooltip' data-tooltip='recommended by ${info.author}'>${info.emoji}</span></span>`+  "puzzle " + num + (completed.includes(num) ? "✅" : "");
+    document.getElementById("title").innerHTML = `<span class='tooltip' data-tooltip='recommended by ${info.author}'>${info.emoji}</span>`+  "puzzle " + num + (completed.includes(num) ? "✅" : "");
 } else {
     document.getElementById("title").textContent = "puzzle " + num + (completed.includes(num) ? "✅" : "");
 }
@@ -20,7 +20,7 @@ makeFrame(num);
 const SCALE = 3;
 
 document.getElementById("all").innerHTML += `
-<a class='space' id='next'>▶️next</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='nextunsolved'>⏩next unsolved</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='randompuzzle'>🎲random puzzle</a><br/>
+<a class='space' id='next'>▶️next</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='nextunsolved'>⏩next unsolved</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='randompuzzle'>🎲random</a><br/>
 <a class='space' href="all.html">🗃️all puzzles</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' id='sandbox' href="sandbox.html">🪣sandbox</a><br/>
 <a class='space' href="index.html">❓how to play</a>
 <details style='margin-bottom: 20px'>

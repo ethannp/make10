@@ -32,15 +32,17 @@ body {
     height: 90vh;
 }
 
-.vcenter {
-    height: 500px;
-    position: absolute;
-    top: 45%;
-    margin-top: -250px;
-}
+@media (min-height: 500px) {
+    .vcenter {
+        height: 500px;
+        position: absolute;
+        top: 45%;
+        margin-top: -250px;
+    }
 
-.vcenter:has(details[open]) {
-    padding-bottom: 450px;
+    .vcenter:has(details[open]) {
+        padding-bottom: 450px;
+    }
 }
 
 .temp {
@@ -55,6 +57,8 @@ body {
     text-align: center;
     font-family: "Fira Code", monospace;
     font-size: 0px;
+    width: 90%;
+    margin: auto;
 }
 
 .num {
@@ -327,16 +331,16 @@ canvas {
     width: max-content;
 
     position: absolute;
-    bottom: 90%;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
 
     font-weight: normal;
-
     content: attr(data-tooltip);
     background: rgba(207, 224, 255, 0.507);
+    border: 1px solid rgb(129, 129, 215);
     padding: 6px 10px;
     font-size: 14px;
     line-height: 14px;
-    border-radius: 2px;
+    border-radius: 3px;
 }
