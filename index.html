@@ -27,7 +27,16 @@
             <div class="temp" id="make-1234"></div>
             <div class="temp" id="make-4211"></div>
             <div class="temp" id="make-1111"></div>
-            <p>next, you can try <a href="all.html">all the numbers</a>!</p>
+            <p>next, you can try <a href="all.html">all the numbers</a><span
+                    id="new_player"></span></p>
+            <script>
+                let ls = localStorage.getItem("make10-complete");
+                    if(!ls || ls.split(",").length < 8) {
+                        document.getElementById("new_player").innerHTML = ", and you should check out some of <span title='intro_puzzle_bot'>[🤖]</span>'s recommended puzzles!"
+                    } else {
+                        document.getElementById("new_player").innerHTML = "!";
+                    }
+            </script>
             <details>
                 <summary>technical notes</summary>
                 <div class="settingsmenu">
@@ -57,9 +66,14 @@
                 <summary>changelog</summary>
                 <div class="settingsmenu">
                     <ul>
-                        <li>6/10/2025: added sandbox mode and recommended puzzles from phenomist<span title="recommended by phenomist">[🌁]</span> (congrats phenomist for completing 98%!)</li>
-                        <li>6/6/2025: added multisolve mode, progress pictures, and next buttons</li>
-                        <li>6/5/2025: switched to arbitrary precision arithmetic</li>
+                        <li>6/10/2025: added sandbox mode and recommended
+                            puzzles from <span
+                                title="phenomist">[🌁]</span>
+                            (congrats phenomist for completing 98%!)</li>
+                        <li>6/6/2025: added multisolve mode, progress pictures,
+                            and next buttons</li>
+                        <li>6/5/2025: switched to arbitrary precision
+                            arithmetic</li>
                         <li>6/4/2025: release date!</li>
                     </ul>
                 </div>
