@@ -21,6 +21,7 @@ makeFrame(num);
 
 document.getElementById("all").innerHTML += `<a class='space' id='linktopuz'>🧩puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a>`;
 document.getElementById("all").innerHTML += `<div id="canvascontainer">
+<p id='canvaslabel'><b id="numsolved">3938</b> solves</p>
                 <canvas id="allselector" width="${SCALE * 100}" height="${SCALE * 100}"></canvas></div>`;
 
 for (let i = 1; i < 5; i++) {
@@ -98,6 +99,7 @@ function drawCanvas() {
     challengecompleted.forEach(n => {
         ctx.fillRect((n % 100) * SCALE, (Math.floor(n / 100)) * SCALE, SCALE, SCALE);
     });
+    document.getElementById("numsolved").textContent = completed.length;
 }
 drawCanvas();
 

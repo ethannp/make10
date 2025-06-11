@@ -7,6 +7,7 @@ const itemMargin = 8;
 
 const container = document.getElementById('scroll-container');
 const content = document.getElementById('content');
+const fixedTooltip = document.getElementById('dynamic-tooltip');
 function render() {
     refetchCompleted();
     const availableWidth = container.clientWidth - 20;
@@ -46,7 +47,7 @@ function render() {
             let info = getPuzzleInfo(num);
             if (info) {
                 span.textContent = `${info.emoji}${num}`;
-                span.title = `recommended by ${info.author}`;
+                span.setAttribute("data-tooltip", `recommended by ${info.author}`);
             } else {
                 span.textContent = `${num}`;
             }
@@ -55,8 +56,65 @@ function render() {
     }
 }
 
+function positionTooltip(targetElement) {
+    const targetRect = targetElement.getBoundingClientRect();
+
+    const tooltipWidth = fixedTooltip.offsetWidth;
+    const tooltipHeight = fixedTooltip.offsetHeight;
+    const marginAboveElement = 8;
+    const tooltipLeft = targetRect.left + (targetRect.width / 2) - (tooltipWidth / 2);
+    const tooltipTop = targetRect.top - tooltipHeight - marginAboveElement;
+
+    fixedTooltip.style.left = `${tooltipLeft}px`;
+    fixedTooltip.style.top = `${tooltipTop}px`;
+}
+
 container.addEventListener('scroll', render);
 window.addEventListener('resize', render);
+content.addEventListener('mouseover', (event) => {
+    const target = event.target.closest('.puzzle');
+    if (target && target.hasAttribute('data-tooltip')) {
+        const tooltipText = target.getAttribute('data-tooltip');
+        fixedTooltip.textContent = tooltipText;
+        fixedTooltip.style.opacity = '1';
+        fixedTooltip.style.visibility = 'visible';
+        positionTooltip(target);
+    }
+});
+
+content.addEventListener('mouseout', (event) => {
+    const target = event.target.closest('.puzzle');
+    if (target) {
+        fixedTooltip.style.opacity = '0';
+        fixedTooltip.style.visibility = 'hidden';
+    }
+});
+
+
+container.addEventListener('scroll', () => {
+    if (fixedTooltip.style.visibility === 'visible') {
+        const hoveredPuzzle = document.querySelector('.puzzle:hover');
+        if (hoveredPuzzle) {
+            positionTooltip(hoveredPuzzle);
+        } else {
+            fixedTooltip.style.opacity = '0';
+            fixedTooltip.style.visibility = 'hidden';
+        }
+    }
+});
+
+window.addEventListener('resize', () => {
+    render();
+    if (fixedTooltip.style.visibility === 'visible') {
+        const hoveredPuzzle = document.querySelector('.puzzle:hover');
+        if (hoveredPuzzle) {
+            positionTooltip(hoveredPuzzle);
+        } else {
+            fixedTooltip.style.opacity = '0';
+            fixedTooltip.style.visibility = 'hidden';
+        }
+    }
+});
 
 Array.from(document.querySelectorAll('input[type=checkbox]')).forEach(input => {
     input.addEventListener("change", function () {
@@ -156,7 +214,22 @@ function checkbox() {
         prefs[3] = '0'
     }
     localStorage.setItem("make10-prefs", prefs.join(""));
-    document.getElementById("completedcount").textContent = "results: " + list.filter(x => completed.includes(x)).length + "/" + list.length;
+    document.getElementById("completedcount").textContent = "";
+    if (completed.length >= 9900) {
+        document.getElementById("completedcount").textContent += "🏆";
+    } else if (completed.length >= 9000) {
+        document.getElementById("completedcount").textContent += "🚀";
+    } else if (completed.length >= 5000) {
+        document.getElementById("completedcount").textContent += "👏";
+    }
+    document.getElementById("completedcount").textContent += "results: " + list.filter(x => completed.includes(x)).length + "/" + list.length;
+    if (completed.length >= 9900) {
+        document.getElementById("completedcount").textContent += "🏆";
+    } else if (completed.length >= 9000) {
+        document.getElementById("completedcount").textContent += "🚀";
+    } else if (completed.length >= 5000) {
+        document.getElementById("completedcount").textContent += "👏";
+    }
     render();
 }
 
@@ -226,3 +299,8 @@ canvas.addEventListener('click', function (ev) {
     a.href = `puzzle.html?num=${id}`
     a.click();
 })
+
+let ls = localStorage.getItem("make10-complete");
+if (!ls || ls.split(",").length <= 4) {
+    showEphemeralMessage("[🤖]: check out my puzzles! check the 'recommended' option, then select any puzzle with the 🤖 emoji.", true, 15000);
+}

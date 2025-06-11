@@ -9,6 +9,35 @@ code {
 
 h1 {
     line-height: 2em;
+    margin-bottom: 10px;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+ol {
+    margin-bottom: 10px;
+}
+
+.lbblock {
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 300px;
+    margin: 15px auto;
+}
+
+.first {
+    background-color: rgb(255, 253, 232);
+}
+
+.second {
+    background-color: rgb(255, 239, 239);
+}
+
+.third {
+    background-color: rgb(237, 244, 255);
 }
 
 body {
@@ -41,7 +70,7 @@ body {
     }
 
     .vcenter:has(details[open]) {
-        padding-bottom: 450px;
+        padding-bottom: clamp(520px, calc(590px - 10vw), 540px);
     }
 }
 
@@ -120,6 +149,7 @@ summary {
 
 details {
     text-align: left;
+    margin: 5px auto;
 }
 
 #scroll-container {
@@ -326,21 +356,99 @@ canvas {
     height: 900px;
 }
 
-[data-tooltip]:hover::after {
+h1>[data-tooltip]:hover::after {
     display: block;
-    width: max-content;
-
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-
+    width: max-content;
     font-weight: normal;
     content: attr(data-tooltip);
-    background: rgba(207, 224, 255, 0.507);
+    background: rgb(230, 239, 255);
     border: 1px solid rgb(129, 129, 215);
     padding: 6px 10px;
     font-size: 14px;
     line-height: 14px;
     border-radius: 3px;
+    z-index: 9999;
+}
+
+.fixed-tooltip {
+    position: fixed;
+    text-align: center;
+    font-size: 14px;
+    background: rgba(230, 239, 255, 0.95);
+    border: 1px solid rgb(129, 129, 215);
+    padding: 6px 3px;
+    border-radius: 3px;
+    width: 120px;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#ephemeralcontainer {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.ephemeral {
+    border: 1px solid rgb(129, 129, 215);
+    background: rgba(230, 239, 255, 0.95);
+    color: black;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateY(-20px);
+    min-width: 150px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 18px;
+    max-width: 300px;
+}
+
+.closable {
+    padding: 10px 30px 10px 7px;
+    pointer-events: auto;
+}
+
+.unclosable {
+    padding: 10px 7px;
+    pointer-events: none;
+}
+
+.ephemeral.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ephemeral.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.ephemeral-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgba(34, 34, 34, 0.7);
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 5px;
+    border-radius: 2px;
+}
+
+.ephemeral-close:hover {
+    background-color: rgba(0, 0, 0, 0.1)
 }

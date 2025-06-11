@@ -62,6 +62,7 @@ function markComplete(n) {
         completed.push(num);
         try { document.getElementById("title").innerHTML += "✅" }
         catch (err) { }
+        showEphemeralMessage(`✅solved puzzle ${num}`, false, 3000);
     }
     localStorage.setItem("make10-complete", completed.join(","))
     try { updateCanvas(); }
@@ -70,6 +71,7 @@ function markComplete(n) {
 
 function markMultiComplete(ns, num) {
     refetchCompleted();
+    let prevCompleted = completed.length;
     if (!completed.includes(num)) {
         //console.log(num);
         try { document.getElementById("title").innerHTML += "✅" }
@@ -77,6 +79,7 @@ function markMultiComplete(ns, num) {
     }
     completed = [...new Set([...completed, ...ns])];
     localStorage.setItem("make10-complete", completed.join(","))
+    showEphemeralMessage(`✅multisolved ${completed.length - prevCompleted} puzzles`, false, 3000);
     try { updateCanvas(); }
     catch (e) { }
     try { updateNextUnsolved(); }
@@ -88,13 +91,13 @@ function markChallengeComplete(n) {
     let num = String(n).padStart(4, '0');
     if (!challengecompleted.includes(num)) {
         challengecompleted.push(num);
+        showEphemeralMessage(`✅solved challenge puzzle ${num}`, false, 4000);
     }
     localStorage.setItem("make10-challengecomplete", challengecompleted.join(","))
 }
 
 function formatAns(ans) {
-    // don't round. truncate and add ... if appropriate*/
-    let trunc = ans.times(10000).round().dividedBy(10000);
+    let trunc = ans.times(10000).trunc().dividedBy(10000);
     return trunc.equals(ans) ? ans : ans.toFixed(4) + "…";
 }
 
@@ -104,7 +107,7 @@ function updateMultinum(multinum, i) {
         multinum.classList.add("var");
     } else { // number mode
         if (sandbox) {
-            multinum.textContent = document.getElementById("box-n" + (i+1)).value;
+            multinum.textContent = document.getElementById("box-n" + (i + 1)).value;
         } else {
             multinum.textContent = num[i];
         }
@@ -186,6 +189,52 @@ function getSandboxLink() {
     return query;
 }
 
+function showEphemeralMessage(text, closable, duration = 3000) {
+    const ephemeralcontainer = document.getElementById("ephemeralcontainer");
+    if (!ephemeralcontainer) {
+        console.log("no ephemeral message container");
+        return;
+    }
+    const elt = document.createElement("div");
+    elt.classList.add("ephemeral");
+
+    const msg = document.createElement("span");
+    msg.textContent = text;
+    elt.appendChild(msg);
+    const closebtn = document.createElement("span");
+    if (closable) {
+        closebtn.classList.add("ephemeral-close");
+        closebtn.textContent = '×';
+        elt.appendChild(closebtn);
+        elt.classList.add('closable');
+    }
+    else {
+        elt.classList.add('unclosable');
+    }
+
+    ephemeralcontainer.appendChild(elt);
+    elt.offsetWidth;
+    elt.classList.add('show');
+
+    const hidemsg = () => {
+        elt.classList.remove('show');
+        elt.classList.add('hide');
+        const transitionendhandler = () => {
+            elt.removeEventListener('transitionend', transitionendhandler);
+            if (elt.parentNode) {
+                elt.remove();
+            }
+        };
+        elt.addEventListener('transitionend', transitionendhandler);
+    };
+
+    const autohide = setTimeout(hidemsg, duration);
+    closebtn.addEventListener("click", () => {
+        clearTimeout(autohide);
+        hidemsg();
+    })
+}
+
 
 function calc(num) {
     refetchCompleted();
@@ -199,10 +248,10 @@ function calc(num) {
     }
     query += document.getElementById("i5" + "-" + num).value;
     if (sandbox) {
-        window.history.replaceState({}, '', `sandbox.html?num=${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}&query=${getSandboxLink()}`);
+        window.history.replaceState({}, '', `sandbox.html?num=${document.getElementById("box-n1").value || "0"}${document.getElementById("box-n2").value || "0"}${document.getElementById("box-n3").value || "0"}${document.getElementById("box-n4").value || "0"}&query=${getSandboxLink()}`);
         try {
-            document.getElementById("linktopuz").href = `puzzle.html?num=${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}&query=${getSandboxLink()}`;
-            document.getElementById("linktopuz").textContent = `🧩puzzle ${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}`;
+            document.getElementById("linktopuz").href = `puzzle.html?num=${document.getElementById("box-n1").value || "0"}${document.getElementById("box-n2").value || "0"}${document.getElementById("box-n3").value || "0"}${document.getElementById("box-n4").value || "0"}&query=${getSandboxLink()}`;
+            document.getElementById("linktopuz").textContent = `🧩puzzle ${document.getElementById("box-n1").value || "0"}${document.getElementById("box-n2").value || "0"}${document.getElementById("box-n3").value || "0"}${document.getElementById("box-n4").value || "0"}`;
         }
         catch (e) { }
     }
@@ -300,6 +349,12 @@ function calc(num) {
                     document.getElementById("challenge").innerHTML += "✅";
                 }
             }
+            if (result == 10 && !sandbox && num == '5095' && mexp.eval(query.replace('9', '8')).equals(10)) {
+                document.getElementById("challenge").innerHTML = '[🤖]: notice how the expression would still evaluate to 10 even if the 9 was any other number? try using <b>multisolve mode</b> (enable it under settings)!'
+            }
+            if (result == 10 && !sandbox && num == '6072' && mexp.eval(query.replace('6', '5')).equals(10)) {
+                document.getElementById("challenge").innerHTML = '[🤖]: notice how the expression would still evaluate to 10 even if the 6 was any other number? try using <b>multisolve mode</b> (enable it under settings)!'
+            }
         } catch (e) {
             console.log(e)
             if (e.message == "explode") {
@@ -316,7 +371,7 @@ function calc(num) {
         }
     }
     if (sandbox) {
-        if (completed.includes(`${document.getElementById("box-n1").value}${document.getElementById("box-n2").value}${document.getElementById("box-n3").value}${document.getElementById("box-n4").value}`)) {
+        if (completed.includes(`${document.getElementById("box-n1").value || "0"}${document.getElementById("box-n2").value || "0"}${document.getElementById("box-n3").value || "0"}${document.getElementById("box-n4").value || "0"}`)) {
             document.getElementById("sandbox-completed").textContent = "✅";
         } else {
             document.getElementById("sandbox-completed").textContent = "";
