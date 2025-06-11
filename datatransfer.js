@@ -124,17 +124,22 @@ document.getElementById("clearall").addEventListener("click", () => {
 let generatedAnimation = false;
 let data_url;
 
+let SCALE;
+if (window.innerWidth < 400) {
+    SCALE = 3;
+} else if (window.innerWidth < 500) {
+    SCALE = 4;
+} else {
+    SCALE = 5;
+}
+
+document.getElementById("animationresult").width = 100 * SCALE;
+document.getElementById("animationresult").height = 100 * SCALE;
+
 function createAnimation() {
     refetchCompleted();
     let canvas = document.createElement("canvas");
-    let SCALE;
-    if (window.innerWidth < 400) {
-        SCALE = 3;
-    } else if (window.innerWidth < 500) {
-        SCALE = 4;
-    } else {
-        SCALE = 5;
-    }
+
     canvas.width = SCALE * 100;
     canvas.height = SCALE * 100;
     let ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -171,12 +176,15 @@ function createAnimation() {
 
 document.getElementById("animation").addEventListener("click", () => {
     if (generatedAnimation) {
-        document.getElementById("animationresult").src = data_url;
+        document.getElementById("animationresult").src = "";
+        setTimeout(() => {
+            document.getElementById("animationresult").src = data_url;
+        }, 0);
     } else {
         document.getElementById("animation").style.display = 'none';
         document.getElementById("progress").textContent = "loading...";
         setTimeout(() => {
             createAnimation();
-        }, 10);
+        }, 50);
     }
 });
