@@ -174,7 +174,7 @@ canvas.addEventListener('mousemove', function (ev) {
     y = Math.floor(ev.clientY - canvas.getBoundingClientRect().top);
     let id = Math.floor(y / SCALE) * 100 + Math.floor(x / SCALE);
     let idstring = String(id).padStart(4, '0');
-    if (id <= 0) {
+    if (id < 0) {
         document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves`;
         return;
     }
@@ -197,7 +197,7 @@ canvas.addEventListener('click', function (ev) {
     x = Math.floor(ev.clientX - canvas.getBoundingClientRect().left);
     y = Math.floor(ev.clientY - canvas.getBoundingClientRect().top);
     let id = Math.floor(y / SCALE) * 100 + Math.floor(x / SCALE);
-    if (id <= 0) {
+    if (id < 0) {
         return;
     }
     let a = document.createElement("a");
