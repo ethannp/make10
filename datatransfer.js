@@ -164,6 +164,7 @@ function createAnimation() {
             addframe = 0;
         }
     });
+    encoder.addFrame(ctx);
     encoder.finish();
     let binary_gif = encoder.stream().getData();
     data_url = 'data:image/gif;base64,' + encode64(binary_gif);
