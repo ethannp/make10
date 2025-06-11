@@ -301,6 +301,7 @@ canvas {
 
 #sandbox-num-container {
     margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 .sandbox-num {
@@ -403,7 +404,6 @@ h1>[data-tooltip]:hover::after {
 
 .ephemeral {
     border: 1px solid rgb(129, 129, 215);
-    background: rgba(230, 239, 255, 0.95);
     color: black;
     border-radius: 3px;
     opacity: 0;
@@ -418,11 +418,13 @@ h1>[data-tooltip]:hover::after {
 
 .closable {
     padding: 10px 30px 10px 7px;
+    background: rgba(230, 239, 255, 0.95);
     pointer-events: auto;
 }
 
 .unclosable {
     padding: 10px 7px;
+    background: rgba(230, 239, 255, 0.75);
     pointer-events: none;
 }
 
