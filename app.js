@@ -79,7 +79,9 @@ function markMultiComplete(ns, num) {
     }
     completed = [...new Set([...completed, ...ns])];
     localStorage.setItem("make10-complete", completed.join(","))
-    showEphemeralMessage(`✅multisolved ${completed.length - prevCompleted} puzzles`, false, 3000);
+    if (completed.length != prevCompleted) {
+        showEphemeralMessage(`✅multisolved ${completed.length - prevCompleted} puzzles`, false, 3000);
+    }
     try { updateCanvas(); }
     catch (e) { }
     try { updateNextUnsolved(); }
@@ -91,7 +93,7 @@ function markChallengeComplete(n) {
     let num = String(n).padStart(4, '0');
     if (!challengecompleted.includes(num)) {
         challengecompleted.push(num);
-        showEphemeralMessage(`✅solved challenge puzzle ${num}`, false, 4000);
+        showEphemeralMessage(`✅solved challenge puzzle ${num}`, false, 5000);
     }
     localStorage.setItem("make10-challengecomplete", challengecompleted.join(","))
 }

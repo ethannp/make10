@@ -21,7 +21,7 @@ makeFrame(num);
 
 document.getElementById("all").innerHTML += `<a class='space' id='linktopuz'>🧩puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a>`;
 document.getElementById("all").innerHTML += `<div id="canvascontainer">
-<p id='canvaslabel'><b id="numsolved">3938</b> solves</p>
+<p id='canvaslabel'><b>3938</b> solves</p>
                 <canvas id="allselector" width="${SCALE * 100}" height="${SCALE * 100}"></canvas></div>`;
 
 for (let i = 1; i < 5; i++) {
@@ -56,6 +56,7 @@ document.addEventListener('input', event => {
         multivars[target.getAttribute("data-index") - 1] = false;
         updateMultinum(document.getElementById(`n${target.getAttribute("data-index")}-0000`), target.getAttribute("data-index") - 1);
         updateNumsSandbox();
+        drawCanvas();
     }
 });
 
@@ -67,7 +68,8 @@ Array.from(document.querySelectorAll('.up')).forEach(input => {
         } else {
             box.value = parseInt(box.value) + 1;
         }
-        box.dispatchEvent(new Event('input', { bubbles: true }))
+        box.dispatchEvent(new Event('input', { bubbles: true }));
+        drawCanvas();
     })
 });
 
@@ -79,7 +81,8 @@ Array.from(document.querySelectorAll('.down')).forEach(input => {
         } else {
             box.value = parseInt(box.value) - 1;
         }
-        box.dispatchEvent(new Event('input', { bubbles: true }))
+        box.dispatchEvent(new Event('input', { bubbles: true }));
+        drawCanvas();
     })
 });
 
@@ -99,7 +102,21 @@ function drawCanvas() {
     challengecompleted.forEach(n => {
         ctx.fillRect((n % 100) * SCALE, (Math.floor(n / 100)) * SCALE, SCALE, SCALE);
     });
-    document.getElementById("numsolved").textContent = completed.length;
+
+    //highlight selected
+    ctx.fillStyle = 'blue';
+    let cur = `${document.getElementById("box-n1").value || "0"}${document.getElementById("box-n2").value || "0"}${document.getElementById("box-n3").value || "0"}${document.getElementById("box-n4").value || "0"}`;
+    ctx.fillRect((cur % 100) * SCALE, (Math.floor(cur / 100)) * SCALE, SCALE, SCALE);
+    ctx.fillStyle = 'white';
+    if (completed.includes(cur)) {
+        ctx.fillStyle = '#02d91f';
+    }
+    if (challengecompleted.includes(cur)) {
+        ctx.fillStyle = '#ff3be5';
+    }
+    ctx.fillRect((cur % 100) * SCALE + 1, (Math.floor(cur / 100)) * SCALE + 1, SCALE - 2, SCALE - 2);
+
+    document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves`;
 }
 drawCanvas();
 
@@ -111,8 +128,10 @@ canvas.addEventListener('mousemove', function (ev) {
     let id = Math.floor(y / SCALE) * 100 + Math.floor(x / SCALE);
     let idstring = String(id).padStart(4, '0');
     if (id <= 0) {
+        document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves`;
         return;
     }
+    document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves | puzzle ${String(id).padStart(4, '0')}`;
     ctx.fillStyle = 'black'
     ctx.fillRect(Math.floor(x / SCALE) * SCALE, Math.floor(y / SCALE) * SCALE, SCALE, SCALE);
     if (challengecompleted.includes(idstring)) {
@@ -135,7 +154,7 @@ canvas.addEventListener('click', function (ev) {
         return;
     }
     let a = document.createElement("a");
-    a.href = `sandbox.html?num=${id}&query=${getSandboxLink()}`
+    a.href = `sandbox.html?num=${String(id).padStart(4, '0')}&query=${getSandboxLink()}`
     a.click();
 })
 
