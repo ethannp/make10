@@ -286,7 +286,7 @@ canvas.addEventListener('mousemove', function (ev) {
         document.getElementById("canvaslabel").innerHTML = `hover below!`
         return;
     }
-    document.getElementById("canvaslabel").innerHTML = `go to puzzle ${id} ${completed.includes(idstring) ? (challengecompleted.includes(idstring) ? "✅✅" : "✅") : ""}`;
+    document.getElementById("canvaslabel").innerHTML = `go to puzzle ${String(id).padStart(4, '0')} ${completed.includes(idstring) ? (challengecompleted.includes(idstring) ? "✅✅" : "✅") : ""}`;
     ctx.fillStyle = 'black'
     ctx.fillRect(Math.floor(x / SCALE) * SCALE, Math.floor(y / SCALE) * SCALE, SCALE, SCALE);
     if (challengecompleted.includes(idstring)) {

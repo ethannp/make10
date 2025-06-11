@@ -39,7 +39,8 @@ document.getElementById("export").addEventListener("click", () => {
 document.getElementById("import").addEventListener("click", () => {
     let importfile = document.getElementById("file-upload");
     if (!importfile.files || !importfile.files[0]) {
-        alert("please upload an image!");
+        showEphemeralMessage(`❌no image chosen!`, true, "failure", 6000)
+        return;
     }
     const fr = new FileReader();
     let canvas = document.createElement("canvas");
@@ -50,6 +51,7 @@ document.getElementById("import").addEventListener("click", () => {
         const img = new Image();
         img.addEventListener("load", () => {
             if (img.width != 100 || img.height != 101) {
+                console.log("incorrect image size");
                 showEphemeralMessage(`❌invalid save file!`, true, "failure", 6000)
                 return;
             }
@@ -63,10 +65,10 @@ document.getElementById("import").addEventListener("click", () => {
                 // 100 = solve
                 // 200 = challenge
                 if (imagedata[i] == 100) {
-                    importsolved.push({ puz: String(i / 4).padStart(4, '0'), order: imagedata[i + 1] + imagedata[i + 2] * 255 });
+                    importsolved.push({ puz: String(i / 4).padStart(4, '0'), order: imagedata[i + 1] + imagedata[i + 2] * 256 });
                 }
                 else if (imagedata[i] == 200) {
-                    importsolved.push({ puz: String(i / 4).padStart(4, '0'), order: imagedata[i + 1] + imagedata[i + 2] * 255 });
+                    importsolved.push({ puz: String(i / 4).padStart(4, '0'), order: imagedata[i + 1] + imagedata[i + 2] * 256 });
                     importchallengesolved.push(String(i / 4).padStart(4, '0'));
                 }
                 importsolved.sort((a, b) => { return a.order - b.order });
@@ -76,9 +78,12 @@ document.getElementById("import").addEventListener("click", () => {
                 // 0 = 1
                 importprefs.push(imagedata[i] == 255 ? 0 : 1);
             }
+            // console.log(importsolved);
 
             if (new Set(importsolved.map(a => a.order)).size != importsolved.length ||
                 new Set(importsolved.map(a => a.puz)).size != importsolved.length) {
+                //console.log(new Set(importsolved.map(a => a.order)).size);
+                console.log("duplicate found");
                 showEphemeralMessage(`❌invalid save file!`, true, "failure", 6000)
                 return;
             }
@@ -114,4 +119,64 @@ document.getElementById("clearall").addEventListener("click", () => {
     } else {
         showEphemeralMessage("no data was changed.", true, "default", 6000)
     }
-})
+});
+
+let generatedAnimation = false;
+let data_url;
+
+function createAnimation() {
+    refetchCompleted();
+    let canvas = document.createElement("canvas");
+    let SCALE;
+    if (window.innerWidth < 400) {
+        SCALE = 3;
+    } else if (window.innerWidth < 500) {
+        SCALE = 4;
+    } else {
+        SCALE = 5;
+    }
+    canvas.width = SCALE * 100;
+    canvas.height = SCALE * 100;
+    let ctx = canvas.getContext("2d", { willReadFrequently: true });
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, SCALE * 100, SCALE * 100);
+
+    let encoder = new GIFEncoder();
+    encoder.setDelay(20);
+    encoder.start();
+    encoder.addFrame(ctx);
+    let addframe = 0;
+    completed.forEach(n => {
+        if (challengecompleted.includes(n)) {
+            ctx.fillStyle = '#ff3be5';
+        } else {
+            ctx.fillStyle = '#02d91f';
+        }
+        ctx.fillRect((n % 100) * SCALE, (Math.floor(n / 100)) * SCALE, SCALE, SCALE);
+        addframe++;
+        if (addframe == 3) {
+            encoder.addFrame(ctx);
+            addframe = 0;
+        }
+    });
+    encoder.finish();
+    let binary_gif = encoder.stream().getData();
+    data_url = 'data:image/gif;base64,' + encode64(binary_gif);
+    generatedAnimation = true;
+    document.getElementById("progress").textContent = "";
+    document.getElementById("animation").textContent = "click to replay animation";
+    document.getElementById("animation").style.display = 'inline-block';
+    document.getElementById("animationresult").src = data_url;
+}
+
+document.getElementById("animation").addEventListener("click", () => {
+    if (generatedAnimation) {
+        document.getElementById("animationresult").src = data_url;
+    } else {
+        document.getElementById("animation").style.display = 'none';
+        document.getElementById("progress").textContent = "loading...";
+        setTimeout(() => {
+            createAnimation();
+        }, 10);
+    }
+});

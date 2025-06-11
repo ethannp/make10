@@ -17,6 +17,11 @@
         <script src="SPECIAL.js" defer></script>
         <script src="app.js" defer></script>
         <script src="datatransfer.js" defer></script>
+        <script type="text/javascript" src="jsgif/LZWEncoder.js"></script>
+        <script type="text/javascript" src="jsgif/NeuQuant.js"></script>
+        <script type="text/javascript" src="jsgif/GIFEncoder.js"></script>
+        <script type="text/javascript" src="jsgif/b64.js"></script>
+
     </head>
     <body>
         <div class="all" id="all" style="margin-bottom: 60px;">
@@ -118,15 +123,31 @@
             <details>
                 <summary>data</summary>
                 <div class="settingsmenu" id="data" style="text-align: center;">
-                    <p style="margin-bottom: 10px;">to export/backup your make10 data, click the button below to download it as an image file.</p>
-                    <button style="font-size: 18px; margin: auto;display: block;" id="export">export</button>
-                    <hr/>
-                    <p style="margin-bottom: 10px;">to import your make10 data, upload the image file below then click the import button. </p>
-                    <input id="file-upload" style="font-size: 18px; " type="file" accept=".png">
+                    <p style="margin-bottom: 10px;">to export/backup your make10
+                        data, click the button below to download it as an image
+                        file.</p>
+                    <button
+                        style="font-size: 18px; margin: auto;display: block;"
+                        id="export">export</button>
+                    <hr />
+                    <p style="margin-bottom: 10px;">to import your make10 data,
+                        upload the image file below then click the import
+                        button. </p>
+                    <input id="file-upload" style="font-size: 18px; "
+                        type="file" accept=".png">
                     <button style="font-size: 18px;" id="import">import</button>
-                    <hr/>
-                    <p style="margin-bottom: 10px">use the button below to reset ALL progress. this operation CANNOT be reversed! please make a backup of your data before proceeding.</p>
-                    <button style="font-size: 18px;" id="clearall">reset all progress</button>
+                    <hr />
+                    <p style="margin-bottom: 10px">use the button below to reset
+                        ALL progress. this operation CANNOT be reversed! please
+                        make a backup of your data before proceeding.</p>
+                    <button style="font-size: 18px;" id="clearall">reset all
+                        progress</button>
+                    <hr />
+                    <p style="margin-bottom: 10px">click below to generate an
+                        animation of your make10 progress! this may take 1-2 mins.</p>
+                    <button style="font-size: 18px;" id="animation">generate animation</button>
+                    <p id="progress"></p>
+                    <img id="animationresult">
                 </div>
             </details>
         </div>
