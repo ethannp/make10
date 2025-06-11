@@ -117,6 +117,7 @@ cmultisolve.addEventListener('change', () => {
     } else {
         disableMultisolve();
     }
+    updateNumsSandbox();
 });
 
 try {
