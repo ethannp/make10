@@ -62,7 +62,7 @@ function markComplete(n) {
         completed.push(num);
         try { document.getElementById("title").innerHTML += "✅" }
         catch (err) { }
-        showEphemeralMessage(`✅solved puzzle ${num}`, false, 3000);
+        showEphemeralMessage(`✅solved puzzle ${num}`, false, 4000);
     }
     localStorage.setItem("make10-complete", completed.join(","))
     try { updateCanvas(); }
@@ -80,7 +80,7 @@ function markMultiComplete(ns, num) {
     completed = [...new Set([...completed, ...ns])];
     localStorage.setItem("make10-complete", completed.join(","))
     if (completed.length != prevCompleted) {
-        showEphemeralMessage(`✅multisolved ${completed.length - prevCompleted} puzzles`, false, 3000);
+        showEphemeralMessage(`✅multisolved ${completed.length - prevCompleted} puzzles`, false, 4000);
     }
     try { updateCanvas(); }
     catch (e) { }
@@ -214,7 +214,7 @@ function showEphemeralMessage(text, closable, duration = 3000) {
         elt.classList.add('unclosable');
     }
 
-    ephemeralcontainer.appendChild(elt);
+    ephemeralcontainer.prepend(elt);
     elt.offsetWidth;
     elt.classList.add('show');
 

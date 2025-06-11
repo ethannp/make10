@@ -301,7 +301,7 @@ canvas {
 
 #sandbox-num-container {
     margin-bottom: 50px;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .sandbox-num {
@@ -392,7 +392,7 @@ h1>[data-tooltip]:hover::after {
 
 #ephemeralcontainer {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10000;
@@ -408,12 +408,12 @@ h1>[data-tooltip]:hover::after {
     border-radius: 3px;
     opacity: 0;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    transform: translateY(-20px);
-    min-width: 150px;
+    transform: translateY(20px);
+    min-width: 200px;
     text-align: center;
     font-size: 18px;
     line-height: 18px;
-    max-width: 300px;
+    max-width: 350px;
 }
 
 .closable {
@@ -424,7 +424,7 @@ h1>[data-tooltip]:hover::after {
 
 .unclosable {
     padding: 10px 7px;
-    background: rgba(230, 239, 255, 0.75);
+    background: rgba(230, 239, 255, 0.85);
     pointer-events: none;
 }
 
@@ -435,7 +435,7 @@ h1>[data-tooltip]:hover::after {
 
 .ephemeral.hide {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(20px);
 }
 
 .ephemeral-close {

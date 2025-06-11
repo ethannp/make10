@@ -41,7 +41,12 @@ function render() {
                 span.classList.add("complete");
             }
             span.id = "puz-" + num;
-            span.href = `puzzle.html?num=${num}`
+            if(openinsandbox.checked) {
+                span.href = `sandbox.html?num=${num}`
+            } else {
+                span.href = `puzzle.html?num=${num}`
+            }
+            
             span.style.top = `${row * fullItemHeight + itemMargin}px`;
             span.style.left = `${col * (itemWidth + 2 * itemMargin) + itemMargin}px`;
             let info = getPuzzleInfo(num);
@@ -127,6 +132,7 @@ let hideunsolved = document.getElementById("hideunsolved");
 let recommended = document.getElementById("recommended");
 let haschallenge = document.getElementById("has-challenge");
 let random = document.getElementById("random");
+let openinsandbox = document.getElementById("openinsandbox");
 let search = document.getElementById("search");
 search.addEventListener("input", function () {
     checkbox();
@@ -148,6 +154,9 @@ try {
     }
     if (prefs[4] == "1") {
         haschallenge.checked = true;
+    }
+    if (prefs[7] == "1") {
+        openinsandbox.checked = true;
     }
 }
 catch (e) { localStorage.setItem("make10-prefs", DEFAULT_SETTINGS) }
@@ -212,6 +221,11 @@ function checkbox() {
         prefs[3] = '1';
     } else {
         prefs[3] = '0'
+    }
+    if (openinsandbox.checked) {
+        prefs[7] = '1';
+    } else {
+        prefs[7] = '0'
     }
     localStorage.setItem("make10-prefs", prefs.join(""));
     document.getElementById("completedcount").textContent = "";

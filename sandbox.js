@@ -22,7 +22,14 @@ makeFrame(num);
 document.getElementById("all").innerHTML += `<a class='space' id='linktopuz'>🧩puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a>`;
 document.getElementById("all").innerHTML += `<div id="canvascontainer">
 <p id='canvaslabel'><b>3938</b> solves</p>
-                <canvas id="allselector" width="${SCALE * 100}" height="${SCALE * 100}"></canvas></div>`;
+<canvas id="allselector" width="${SCALE * 100}" height="${SCALE * 100}"></canvas></div>
+<details style='margin-bottom: 20px'>
+    <summary>settings</summary>
+    <div class="settingsmenu">
+        <label for="cmultisolve"><input type="checkbox" id="cmultisolve">multisolve mode</label>
+        <p style="color: grey; margin-top: 0">multisolve mode allows you to solve multiple puzzles at once. click a number to toggle it to 'variable' mode. then, puzzles will only be solved if all queries with <i>every</i> number [0-9] filling <i>every</i> variable evaluates to 10.</p>
+    </div>
+</details>`;
 
 for (let i = 1; i < 5; i++) {
     document.getElementById(`box-n${i}`).value = actualnum[i - 1];
@@ -85,6 +92,46 @@ Array.from(document.querySelectorAll('.down')).forEach(input => {
         drawCanvas();
     })
 });
+
+let cmultisolve = document.getElementById("cmultisolve");
+cmultisolve.addEventListener('change', () => {
+    let prefs;
+    try {
+        prefs = localStorage.getItem("make10-prefs");
+        if (prefs.length < DEFAULT_SETTINGS.length) {
+            prefs.padEnd(DEFAULT_SETTINGS.length, '0');
+        }
+    }
+    catch (e) {
+        prefs = DEFAULT_SETTINGS;
+    }
+    prefs = prefs.split("");
+    if (cmultisolve.checked) {
+        prefs[6] = '1';
+    } else {
+        prefs[6] = '0';
+    }
+    localStorage.setItem("make10-prefs", prefs.join(""));
+    if (cmultisolve.checked) {
+        enableMultisolve();
+    } else {
+        disableMultisolve();
+    }
+});
+
+try {
+    let prefs = localStorage.getItem("make10-prefs");
+    if (prefs.length < DEFAULT_SETTINGS.length) {
+        prefs.padEnd(DEFAULT_SETTINGS.length, '0');
+    }
+    if (prefs[5] == "1") {
+        cnewrandom.checked = true;
+    }
+    if (prefs[6] == "1") {
+        cmultisolve.click();
+    }
+}
+catch (e) { localStorage.setItem("make10-prefs", DEFAULT_SETTINGS) }
 
 let canvas = document.getElementById("allselector")
 let ctx = canvas.getContext('2d');
@@ -157,10 +204,3 @@ canvas.addEventListener('click', function (ev) {
     a.href = `sandbox.html?num=${String(id).padStart(4, '0')}&query=${getSandboxLink()}`
     a.click();
 })
-
-try {
-    if (localStorage.getItem("make10-prefs")[6] == '1') {
-        enableMultisolve();
-    }
-}
-catch (e) { }
