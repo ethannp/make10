@@ -41,12 +41,12 @@ function render() {
                 span.classList.add("complete");
             }
             span.id = "puz-" + num;
-            if(openinsandbox.checked) {
+            if (openinsandbox.checked) {
                 span.href = `sandbox.html?num=${num}`
             } else {
                 span.href = `puzzle.html?num=${num}`
             }
-            
+
             span.style.top = `${row * fullItemHeight + itemMargin}px`;
             span.style.left = `${col * (itemWidth + 2 * itemMargin) + itemMargin}px`;
             let info = getPuzzleInfo(num);
@@ -316,5 +316,7 @@ canvas.addEventListener('click', function (ev) {
 
 let ls = localStorage.getItem("make10-complete");
 if (!ls || ls.split(",").length <= 4) {
-    showEphemeralMessage("[🤖]: check out my puzzles! check the 'recommended' option, then select any puzzle with the 🤖 emoji.", true, 15000);
+    setTimeout(() => {
+        showEphemeralMessage("[🤖]: check out my puzzles! check the 'recommended' option, then select any puzzle with the 🤖 emoji.", true, "default", 15000);
+    }, 500)
 }

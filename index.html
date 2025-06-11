@@ -16,9 +16,11 @@
         <script src="gemini-mexp-decimal.js"></script>
         <script src="SPECIAL.js" defer></script>
         <script src="app.js" defer></script>
+        <script src="datatransfer.js" defer></script>
     </head>
     <body>
         <div class="all" id="all" style="margin-bottom: 60px;">
+            <div id="ephemeralcontainer"></div>
             <h1>make10</h1>
             <p>your goal is to make a mathematical expression that equals 10
                 using four numbers in order. allowed characters:
@@ -40,17 +42,21 @@
             <details>
                 <summary>leaderboard</summary>
                 <div class="settingsmenu">
-                    <i style="color: grey; margin-top: 0; text-align: center; display: inline-block;">this leaderboard is
+                    <i
+                        style="font-size: 16px" class="mini">this
+                        leaderboard is
                         updated manually. please dm me on discord @flfff if
                         you wish to be added!</i>
                     <div class="lbblock first">
                         <h2>🏆99%🏆</h2>
+                        <i class="mini">9900+ puzzles solved</i>
                         <ol>
                             <li>phenomist (6/10/2025)</li>
                         </ol>
                     </div>
                     <div class="lbblock second">
                         <h2>🚀90%🚀</h2>
+                        <i class="mini">9000+ puzzles solved</i>
                         <ol>
                             <li>elara</li>
                             <li>phenomist</li>
@@ -58,6 +64,7 @@
                     </div>
                     <div class="lbblock third">
                         <h2>👏50%👏</h2>
+                        <i class="mini">5000+ puzzles solved</i>
                         <ol>
                             <li>elara</li>
                             <li>phenomist</li>
@@ -94,9 +101,10 @@
                 <summary>changelog</summary>
                 <div class="settingsmenu">
                     <ul>
-                        <li>6/11/2025: added leaderboard</li>
+                        <li>6/11/2025: added leaderboard and data backups</li>
                         <li>6/10/2025: added sandbox mode and recommended
-                            puzzles from <span title="intro_puzzle_bot">[🤖]</span> and <span
+                            puzzles from <span
+                                title="intro_puzzle_bot">[🤖]</span> and <span
                                 title="phenomist">[🌁]</span>
                             (congrats phenomist for completing 99% first!)</li>
                         <li>6/6/2025: added multisolve mode, progress pictures,
@@ -105,6 +113,20 @@
                             arithmetic</li>
                         <li>6/4/2025: release date!</li>
                     </ul>
+                </div>
+            </details>
+            <details>
+                <summary>data</summary>
+                <div class="settingsmenu" id="data" style="text-align: center;">
+                    <p style="margin-bottom: 10px;">to export/backup your make10 data, click the button below to download an image file.</p>
+                    <button style="font-size: 18px; margin: auto;display: block;" id="export">export</button>
+                    <hr/>
+                    <p style="margin-bottom: 10px;">to import your make10 data, upload the image file below then click the import button. </p>
+                    <input id="file-upload" style="font-size: 18px; " type="file" accept=".png">
+                    <button style="font-size: 18px;" id="import">import</button>
+                    <hr/>
+                    <p style="margin-bottom: 10px">use the button below to reset ALL progress. this operation CANNOT be reversed! please make a backup of your data before proceeding.</p>
+                    <button style="font-size: 18px;" id="clearall">reset all progress</button>
                 </div>
             </details>
         </div>

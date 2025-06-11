@@ -62,7 +62,7 @@ function markComplete(n) {
         completed.push(num);
         try { document.getElementById("title").innerHTML += "✅" }
         catch (err) { }
-        showEphemeralMessage(`✅solved puzzle ${num}`, false, 4000);
+        showEphemeralMessage(`✅solved puzzle ${num}`, false, "success", 4000);
     }
     localStorage.setItem("make10-complete", completed.join(","))
     try { updateCanvas(); }
@@ -80,7 +80,7 @@ function markMultiComplete(ns, num) {
     completed = [...new Set([...completed, ...ns])];
     localStorage.setItem("make10-complete", completed.join(","))
     if (completed.length != prevCompleted) {
-        showEphemeralMessage(`✅multisolved ${completed.length - prevCompleted} puzzles`, false, 4000);
+        showEphemeralMessage(`✅multisolved ${completed.length - prevCompleted} puzzles`, false, "success", 4000);
     }
     try { updateCanvas(); }
     catch (e) { }
@@ -93,7 +93,7 @@ function markChallengeComplete(n) {
     let num = String(n).padStart(4, '0');
     if (!challengecompleted.includes(num)) {
         challengecompleted.push(num);
-        showEphemeralMessage(`✅solved challenge puzzle ${num}`, false, 5000);
+        showEphemeralMessage(`✅solved challenge puzzle ${num}`, false, "success", 5000);
     }
     localStorage.setItem("make10-challengecomplete", challengecompleted.join(","))
 }
@@ -191,7 +191,7 @@ function getSandboxLink() {
     return query;
 }
 
-function showEphemeralMessage(text, closable, duration = 3000) {
+function showEphemeralMessage(text, closable, type = "default", duration = 3000) {
     const ephemeralcontainer = document.getElementById("ephemeralcontainer");
     if (!ephemeralcontainer) {
         console.log("no ephemeral message container");
@@ -213,6 +213,8 @@ function showEphemeralMessage(text, closable, duration = 3000) {
     else {
         elt.classList.add('unclosable');
     }
+
+    elt.classList.add(type);
 
     ephemeralcontainer.prepend(elt);
     elt.offsetWidth;

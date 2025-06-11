@@ -403,7 +403,6 @@ h1>[data-tooltip]:hover::after {
 }
 
 .ephemeral {
-    border: 1px solid rgb(129, 129, 215);
     color: black;
     border-radius: 3px;
     opacity: 0;
@@ -416,15 +415,28 @@ h1>[data-tooltip]:hover::after {
     max-width: 350px;
 }
 
+.success {
+    border: 1px solid rgb(129, 215, 130);
+    background: rgba(234, 255, 230, 0.95);
+}
+
+.default {
+    background: rgba(230, 239, 255, 0.95);
+    border: 1px solid rgb(129, 129, 215);
+}
+
+.failure {
+    background: rgba(255, 230, 230, 0.95);
+    border: 1px solid rgb(215, 129, 129);
+}
+
 .closable {
     padding: 10px 30px 10px 7px;
-    background: rgba(230, 239, 255, 0.95);
     pointer-events: auto;
 }
 
 .unclosable {
     padding: 10px 7px;
-    background: rgba(230, 239, 255, 0.85);
     pointer-events: none;
 }
 
@@ -453,4 +465,21 @@ h1>[data-tooltip]:hover::after {
 
 .ephemeral-close:hover {
     background-color: rgba(0, 0, 0, 0.1)
+}
+
+.lbblock>h2 {
+    margin-bottom: 0;
+}
+
+.mini {
+    text-align: center;
+    padding: 0;
+    display: block;
+    font-size: 14px;
+    color: rgba(0,0,0, 0.6);
+    margin: 0;
+}
+
+ol {
+    margin-top: 10px;
 }
