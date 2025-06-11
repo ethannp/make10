@@ -76,6 +76,13 @@ document.getElementById("import").addEventListener("click", () => {
                 // 0 = 1
                 importprefs.push(imagedata[i] == 255 ? 0 : 1);
             }
+
+            if (new Set(importsolved.map(a => a.order)).size != importsolved.length ||
+                new Set(importsolved.map(a => a.puz)).size != importsolved.length) {
+                showEphemeralMessage(`❌invalid save file!`, true, "failure", 6000)
+                return;
+            }
+
             /*console.log(importchallengesolved.join(","));
             console.log(importsolved.map(a => a.puz).join(","));
             console.log(importprefs.slice(0, DEFAULT_SETTINGS.length).join(""));*/
