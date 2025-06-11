@@ -483,3 +483,19 @@ h1>[data-tooltip]:hover::after {
 ol {
     margin-top: 10px;
 }
+
+.btn {
+    font-size: 18px;
+    line-height: 18px;
+    background-color: white;
+    /*background-color: rgb(239, 241, 255);*/
+    margin: 8px;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding: 6px 8px;
+}
+
+.btn:hover {
+    background-color: rgb(237, 237, 237);
+    cursor: pointer;
+}

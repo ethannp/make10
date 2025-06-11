@@ -16,7 +16,8 @@ if (isNaN(actualnum) || actualnum == undefined || actualnum == null || actualnum
 }
 actualnum = String(actualnum).padStart(4, '0');
 
-document.getElementById("all").innerHTML += `<div class="temp" id="make-${num}"></div>`
+document.getElementById("all").innerHTML += `<button class='btn' id='erase'>🧼erase input</button>
+<div class="temp" id="make-${num}"></div>`
 makeFrame(num);
 
 document.getElementById("all").innerHTML += `<a class='space' id='linktopuz'>🧩puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a>`;
@@ -40,6 +41,13 @@ for (let i = 1; i <= 5; i++) {
     document.getElementById(`i${i}-0000`).value = queryLink[i - 1];
     document.getElementById(`i${i}-0000`).dispatchEvent(new Event('input', { bubbles: true }))
 }
+
+document.getElementById("erase").addEventListener("click", () => {
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById(`i${i}-0000`).value = "";
+        document.getElementById(`i${i}-0000`).dispatchEvent(new Event('input', { bubbles: true }))
+    }
+})
 
 function updateNumsSandbox() {
     for (let i = 1; i < 5; i++) {
@@ -163,7 +171,6 @@ function drawCanvas() {
         ctx.fillStyle = '#ff3be5';
     }
     ctx.fillRect((cur % 100) * SCALE + 1, (Math.floor(cur / 100)) * SCALE + 1, SCALE - 2, SCALE - 2);
-
     document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves`;
 }
 drawCanvas();
