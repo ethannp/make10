@@ -283,7 +283,7 @@ canvas.addEventListener('mousemove', function (ev) {
     let id = Math.floor(y / SCALE) * 100 + Math.floor(x / SCALE);
     let idstring = String(id).padStart(4, '0');
     if (id < 0) {
-        document.getElementById("canvaslabel").innerHTML = `hover below!`
+        document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves`;
         return;
     }
     document.getElementById("canvaslabel").innerHTML = `go to puzzle ${String(id).padStart(4, '0')} ${completed.includes(idstring) ? (challengecompleted.includes(idstring) ? "✅✅" : "✅") : ""}`;
@@ -300,7 +300,7 @@ canvas.addEventListener('mousemove', function (ev) {
 })
 canvas.addEventListener('mouseleave', function (ev) {
     drawCanvas();
-    document.getElementById("canvaslabel").innerHTML = `hover below!`
+    document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves`
 })
 canvas.addEventListener('click', function (ev) {
     x = Math.floor(ev.clientX - canvas.getBoundingClientRect().left);
