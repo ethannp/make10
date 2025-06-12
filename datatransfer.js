@@ -37,6 +37,7 @@ document.getElementById("export").addEventListener("click", () => {
 })
 
 document.getElementById("import").addEventListener("click", () => {
+    refetchCompleted();
     let importfile = document.getElementById("file-upload");
     if (!importfile.files || !importfile.files[0]) {
         showEphemeralMessage(`❌no file selected!`, true, "failure", 6000)
