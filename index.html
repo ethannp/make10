@@ -134,9 +134,9 @@
                     <hr />
                     <p style="margin-bottom: 10px;">to import your make10 data,
                         upload the image file below then click the import
-                        button. </p>
+                        button.</p>
                     <input id="file-upload" style="font-size: 18px; "
-                        type="file" accept=".png">
+                        type="file" accept=".png"> <br />
                     <button style="font-size: 18px;" id="import">import</button>
                     <hr />
                     <p style="margin-bottom: 10px">use the button below to reset
@@ -146,20 +146,27 @@
                         progress</button>
                     <hr />
                     <p style="margin-bottom: 10px">click below to generate an
-                        animation of your make10 progress! this may take up to 1-2 mins (depending on settings and how many solves you have).</p>
+                        animation of your make10 progress! this may take up to
+                        1-2 mins (depending on settings and how many solves you
+                        have).</p>
                     <div class="rangelabel">
                         <span>size</span>
                         <input type="range" id="size" min="2" max="5">
                     </div>
                     <div class="rangelabel">
                         <span>smoothness</span>
-                        <input type="range" id="smoothness" min="2" max="8" value='5'>
+                        <input type="range" id="smoothness" min="2" max="8"
+                            value='5'>
                     </div>
-                    <button style="font-size: 18px;" id="animation">generate animation</button>
+                    <button style="font-size: 18px;" id="animation">generate
+                        animation</button>
                     <p id="progress"></p>
-                    <img id="animationresult" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-                    <button style="font-size: 18px;display:none;" id="replay">replay animation</button>
-                    <button style="font-size: 18px;display:none;" id="dlanimation">download gif</button>
+                    <img id="animationresult"
+                        src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+                    <button style="font-size: 18px;display:none;"
+                        id="replay">replay animation</button>
+                    <button style="font-size: 18px;display:none;"
+                        id="dlanimation">download gif</button>
                 </div>
             </details>
         </div>

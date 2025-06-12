@@ -39,7 +39,7 @@ document.getElementById("export").addEventListener("click", () => {
 document.getElementById("import").addEventListener("click", () => {
     let importfile = document.getElementById("file-upload");
     if (!importfile.files || !importfile.files[0]) {
-        showEphemeralMessage(`❌no image chosen!`, true, "failure", 6000)
+        showEphemeralMessage(`❌no file selected!`, true, "failure", 6000)
         return;
     }
     const fr = new FileReader();
@@ -92,17 +92,70 @@ document.getElementById("import").addEventListener("click", () => {
             console.log(importsolved.map(a => a.puz).join(","));
             console.log(importprefs.slice(0, DEFAULT_SETTINGS.length).join(""));*/
 
-            if (prompt(`importing ${importsolved.length} solves. this will overwrite all current data!\ntype IMPORT to confirm.`) === "IMPORT") {
+            let newcompleted = completed.slice();
+            importsolved.map(a => a.puz).forEach(b => {
+                if (!newcompleted.includes(b)) {
+                    newcompleted.push(b);
+                }
+            });
+            let newchallengecompleted = challengecompleted.slice();
+            importchallengesolved.forEach(b => {
+                if (!newchallengecompleted.includes(b)) {
+                    newchallengecompleted.push(b);
+                }
+            })
+            console.log(newchallengecompleted);
+            console.log(challengecompleted);
+            let option = prompt(`OVERWRITE: delete previous data and import ${importsolved.length} solves and ${importchallengesolved.length} challenge solves.
+MERGE: add ${newcompleted.length - completed.length} new solves and ${newchallengecompleted.length - challengecompleted.length} new challenge solves.
+
+would you like to OVERWRITE data or MERGE data?`).toUpperCase();
+
+            if (option == "OVERWRITE") {
                 localStorage.setItem("make10-complete", importsolved.map(a => a.puz).join(","));
-                showEphemeralMessage(`✅${importsolved.length} solves imported!`, true, "success", 10000)
+                showEphemeralMessage(`✅${importsolved.length} solves imported!`, true, "success", 10000);
                 localStorage.setItem("make10-challengecomplete", importchallengesolved.join(","));
                 showEphemeralMessage(`✅${importchallengesolved.length} challenge solves imported!`, true, "success", 10000)
                 localStorage.setItem("make10-prefs", importprefs.slice(0, DEFAULT_SETTINGS.length).join(""));
                 showEphemeralMessage(`✅settings imported!`, true, "success", 10000)
+            } else if (option == "MERGE") {
+                if (newcompleted.length - completed.length == 0 && newchallengecompleted.length - challengecompleted.length == 0) {
+                    showEphemeralMessage(`no new solves to merge; no data was changed`, true, "default", 6000);
+                    return;
+                }
+                if (newcompleted.length - completed.length != 0) {
+                    localStorage.setItem("make10-complete", newcompleted.join(","));
+                    showEphemeralMessage(`✅merged ${newcompleted.length - completed.length} new solves!`, true, "success", 10000);
+                }
+                if (newchallengecompleted.length - challengecompleted.length != 0) {
+                    localStorage.setItem("make10-challengecomplete", newchallengecompleted.join(","));
+                    showEphemeralMessage(`✅${newchallengecompleted.length - challengecompleted.length} challenge solves imported!`, true, "success", 10000)
+                }
+                localStorage.setItem("make10-prefs", importprefs.slice(0, DEFAULT_SETTINGS.length).join(""));
+                showEphemeralMessage(`✅settings imported!`, true, "success", 10000)
+            } else {
+                showEphemeralMessage("import canceled; no data was changed.", true, "default", 6000)
+            }
+
+            /*if (newcompleted.length - completed.length == 0 && newchallengecompleted.length - challengecompleted.length == 0) {
+                showEphemeralMessage(`no new solves to merge; no data was changed`, true, "default", 6000);
+                return;
+            }
+
+                
+
+            if (prompt(`merging ${newcompleted.length - completed.length} new solves and ${newchallengecompleted.length - challengecompleted.length} new challenge solves.\ntype MERGE to confirm.`) === "MERGE") {
+                
+            }
+
+        } else {
+            if ( === "OVERWRITE") {
+                
 
             } else {
-                showEphemeralMessage("import canceled and no data was changed.", true, "default", 6000)
+                
             }
+        }*/
         });
         img.src = e.target.result;
     });
@@ -124,7 +177,7 @@ document.getElementById("clearall").addEventListener("click", () => {
 let generatedAnimation = false;
 let data_url = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
 let encoder;
-let SCALE = 3; 
+let SCALE = 3;
 document.getElementById("size").value = SCALE;
 
 document.getElementById("animationresult").width = 100 * SCALE;
@@ -169,7 +222,7 @@ function createAnimation() {
     document.getElementById("replay").style.display = 'inline-block';
     document.getElementById("dlanimation").style.display = 'inline-block';
     document.getElementById("animationresult").src = data_url;
-    document.getElementById("dlanimation").textContent = `download gif (~${Math.round((data_url.substring(data_url.indexOf(',') + 1).length * 6 / 8)/ (1000 * 1000) * 10) / 10} mb)`
+    document.getElementById("dlanimation").textContent = `download gif (~${Math.round((data_url.substring(data_url.indexOf(',') + 1).length * 6 / 8) / (1000 * 1000) * 10) / 10} mb)`
 }
 
 document.getElementById("animation").addEventListener("click", () => {
