@@ -73,6 +73,8 @@
                         <ol>
                             <li>elara</li>
                             <li>phenomist</li>
+                            <li>abiteofdata</li>
+                            <li>fluff</li>
                         </ol>
                     </div>
                 </div>
@@ -144,10 +146,20 @@
                         progress</button>
                     <hr />
                     <p style="margin-bottom: 10px">click below to generate an
-                        animation of your make10 progress! this may take 1-2 mins.</p>
+                        animation of your make10 progress! this may take up to 1-2 mins (depending on settings and how many solves you have).</p>
+                    <div class="rangelabel">
+                        <span>size</span>
+                        <input type="range" id="size" min="2" max="5">
+                    </div>
+                    <div class="rangelabel">
+                        <span>smoothness</span>
+                        <input type="range" id="smoothness" min="2" max="8" value='5'>
+                    </div>
                     <button style="font-size: 18px;" id="animation">generate animation</button>
                     <p id="progress"></p>
-                    <img id="animationresult">
+                    <img id="animationresult" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+                    <button style="font-size: 18px;display:none;" id="replay">replay animation</button>
+                    <button style="font-size: 18px;display:none;" id="dlanimation">download gif</button>
                 </div>
             </details>
         </div>

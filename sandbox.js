@@ -16,11 +16,11 @@ if (isNaN(actualnum) || actualnum == undefined || actualnum == null || actualnum
 }
 actualnum = String(actualnum).padStart(4, '0');
 
-document.getElementById("all").innerHTML += `<button class='btn' id='erase'>🧼erase input</button>
-<div class="temp" id="make-${num}"></div>`
+document.getElementById("all").innerHTML += `<div class="temp" id="make-${num}"></div>`
 makeFrame(num);
 
-document.getElementById("all").innerHTML += `<a class='space' id='linktopuz'>🧩puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a>`;
+document.getElementById("all").innerHTML += `<button class='btn' id='erase'>🧼erase input</button><br/>
+<a class='space' id='linktopuz'>🧩puzzle</a><a class='space'>&nbsp;|&nbsp;</a><a class='space' href="all.html">🗃️all puzzles</a>`;
 document.getElementById("all").innerHTML += `<div id="canvascontainer">
 <p id='canvaslabel'><b>3938</b> solves</p>
 <canvas id="allselector" width="${SCALE * 100}" height="${SCALE * 100}"></canvas></div>

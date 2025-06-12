@@ -292,6 +292,7 @@ function calc(num) {
         }
         catch (err) {
             console.log(err);
+            document.getElementById("frame-" + num).classList.remove("multicomplete");
             if (err.message == "multiplevalues") {
                 ans.textContent = "🌀";
                 return;
@@ -307,7 +308,6 @@ function calc(num) {
             else {
                 ans.textContent = "❓"
             }
-            document.getElementById("frame-" + num).classList.remove("multicomplete");
         }
 
     } else {

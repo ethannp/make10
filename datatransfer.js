@@ -122,44 +122,39 @@ document.getElementById("clearall").addEventListener("click", () => {
 });
 
 let generatedAnimation = false;
-let data_url;
-
-let SCALE;
-if (window.innerWidth < 400) {
-    SCALE = 3;
-} else if (window.innerWidth < 500) {
-    SCALE = 4;
-} else {
-    SCALE = 5;
-}
+let data_url = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+let encoder;
+let SCALE = 3; 
+document.getElementById("size").value = SCALE;
 
 document.getElementById("animationresult").width = 100 * SCALE;
 document.getElementById("animationresult").height = 100 * SCALE;
+document.getElementById("size").addEventListener("change", () => {
+    SCALE = document.getElementById("size").value;
+    document.getElementById("animationresult").width = 100 * SCALE;
+    document.getElementById("animationresult").height = 100 * SCALE;
+})
 
 function createAnimation() {
     refetchCompleted();
     let canvas = document.createElement("canvas");
+    let smoothness = 10 - document.getElementById("smoothness").value;
 
     canvas.width = SCALE * 100;
     canvas.height = SCALE * 100;
     let ctx = canvas.getContext("2d", { willReadFrequently: true });
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, SCALE * 100, SCALE * 100);
-
-    let encoder = new GIFEncoder();
+    encoder = new GIFEncoder();
     encoder.setDelay(20);
     encoder.start();
     encoder.addFrame(ctx);
     let addframe = 0;
+    ctx.fillStyle = '#02d91f';
     completed.forEach(n => {
-        if (challengecompleted.includes(n)) {
-            ctx.fillStyle = '#ff3be5';
-        } else {
-            ctx.fillStyle = '#02d91f';
-        }
         ctx.fillRect((n % 100) * SCALE, (Math.floor(n / 100)) * SCALE, SCALE, SCALE);
         addframe++;
-        if (addframe == 3) {
+        if (addframe == smoothness) {
             encoder.addFrame(ctx);
             addframe = 0;
         }
@@ -170,22 +165,29 @@ function createAnimation() {
     data_url = 'data:image/gif;base64,' + encode64(binary_gif);
     generatedAnimation = true;
     document.getElementById("progress").textContent = "";
-    document.getElementById("animation").textContent = "click to replay animation";
     document.getElementById("animation").style.display = 'inline-block';
+    document.getElementById("replay").style.display = 'inline-block';
+    document.getElementById("dlanimation").style.display = 'inline-block';
     document.getElementById("animationresult").src = data_url;
+    document.getElementById("dlanimation").textContent = `download gif (~${Math.round((data_url.substring(data_url.indexOf(',') + 1).length * 6 / 8)/ (1000 * 1000) * 10) / 10} mb)`
 }
 
 document.getElementById("animation").addEventListener("click", () => {
-    if (generatedAnimation) {
-        document.getElementById("animationresult").src = "";
-        setTimeout(() => {
-            document.getElementById("animationresult").src = data_url;
-        }, 0);
-    } else {
-        document.getElementById("animation").style.display = 'none';
-        document.getElementById("progress").textContent = "loading...";
-        setTimeout(() => {
-            createAnimation();
-        }, 50);
-    }
+    document.getElementById("animation").style.display = 'none';
+    document.getElementById("progress").textContent = "loading...";
+    setTimeout(() => {
+        createAnimation();
+    }, 50);
 });
+
+document.getElementById("replay").addEventListener("click", () => {
+    document.getElementById("animationresult").src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+    setTimeout(() => {
+        document.getElementById("animationresult").src = data_url;
+    }, 0);
+})
+
+
+document.getElementById("dlanimation").addEventListener("click", () => {
+    encoder.download(`make10_${completed.length}.gif`);
+})
