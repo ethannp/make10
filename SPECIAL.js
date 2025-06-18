@@ -11,7 +11,7 @@ const challenge = [{puz: '1254', restrictions: '+-'},
     {puz: '3495', restrictions: '+-'}, 
     {puz: '9598', restrictions: '+-'}, 
     {puz: '7585', restrictions: '-'}, 
-    {puz: '8951', restrictions: '!'}, 
+    {puz: '8951', restrictions: '^!'}, 
     {puz: '5998', restrictions: '/'}, 
     {puz: '7333', restrictions: '+-'},
     {puz: '8519', restrictions: '^'}]
