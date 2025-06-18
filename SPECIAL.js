@@ -4,5 +4,15 @@ const recommendedpuzzles = [{author: "intro_puzzle_bot", emoji: "🤖", puzzles:
     {author: "abiteofdata", emoji: "🦎", puzzles: ['1196', '7800', '7333', '5257']}, 
     {author: "n3rl", emoji: "🦐", puzzles: ['9387']},
     {author: "elara", emoji: "⛰️", puzzles: ['5998', '4908']}]
-const challenge = [{puz: '1254', restrictions: '+-'}, {puz: '3332', restrictions: '+-'}, {puz: '8235', restrictions: '+-'}, {puz: '8432', restrictions: '+-'}, {puz: '3495', restrictions: '+-'}, {puz: '9598', restrictions: '+-'}, {puz: '7585', restrictions: '-'}, {puz: '8951', restrictions: '!'}, {puz: '5998', restrictions: '/'}, {puz: '7333', restrictions: '+-'}]
+const challenge = [{puz: '1254', restrictions: '+-'}, 
+    {puz: '3332', restrictions: '+-'}, 
+    {puz: '8235', restrictions: '+-'}, 
+    {puz: '8432', restrictions: '+-'}, 
+    {puz: '3495', restrictions: '+-'}, 
+    {puz: '9598', restrictions: '+-'}, 
+    {puz: '7585', restrictions: '-'}, 
+    {puz: '8951', restrictions: '!'}, 
+    {puz: '5998', restrictions: '/'}, 
+    {puz: '7333', restrictions: '+-'},
+    {puz: '8519', restrictions: '^'}]
 const DEFAULT_SETTINGS = "00000000" // unsolved, completed, recommended, random, has-challenge, includerandom, multisolve, openinsandbox
