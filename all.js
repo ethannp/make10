@@ -229,7 +229,9 @@ function checkbox() {
     }
     localStorage.setItem("make10-prefs", prefs.join(""));
     document.getElementById("completedcount").textContent = "";
-    if (completed.length >= 9900) {
+    if (completed.length >= 9950) {
+        document.getElementById("completedcount").textContent += "👑";
+    } else if (completed.length >= 9900) {
         document.getElementById("completedcount").textContent += "🏆";
     } else if (completed.length >= 9000) {
         document.getElementById("completedcount").textContent += "🚀";
@@ -237,7 +239,9 @@ function checkbox() {
         document.getElementById("completedcount").textContent += "👏";
     }
     document.getElementById("completedcount").textContent += "results: " + list.filter(x => completed.includes(x)).length + "/" + list.length;
-    if (completed.length >= 9900) {
+    if (completed.length >= 9950) {
+        document.getElementById("completedcount").textContent += "👑";
+    } else if (completed.length >= 9900) {
         document.getElementById("completedcount").textContent += "🏆";
     } else if (completed.length >= 9000) {
         document.getElementById("completedcount").textContent += "🚀";
