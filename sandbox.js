@@ -101,6 +101,44 @@ Array.from(document.querySelectorAll('.down')).forEach(input => {
     })
 });
 
+Array.from(document.querySelectorAll('.sandbox-num')).forEach(input => {
+    input.addEventListener("keydown", event => {
+        if (event.keyCode == 38 || event.keyCode == 87) {
+            if (parseInt(input.value) == 9) {
+                input.value = 0;
+            } else {
+                input.value = parseInt(input.value) + 1;
+            }
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            drawCanvas();
+        }
+        else if (event.keyCode == 40 || event.keyCode == 83) {
+            if (parseInt(input.value) == 0) {
+                input.value = 9;
+            } else {
+                input.value = parseInt(input.value) - 1;
+            }
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            drawCanvas();
+        } else if (event.keyCode == 65 || event.keyCode == 37) { //left
+            if (input.getAttribute("data-index") == 1) {
+                document.getElementById("box-n4").focus();
+            } else {
+                document.getElementById(`box-n${parseInt(input.getAttribute("data-index")) - 1}`).focus();
+            }
+        }
+        else if (event.keyCode == 68 || event.keyCode == 39) { //right
+            if (input.getAttribute("data-index") == 4) {
+                document.getElementById("box-n1").focus();
+            } else {
+                document.getElementById(`box-n${parseInt(input.getAttribute("data-index")) + 1}`).focus();
+            }
+        } else if (48 <= event.keyCode && event.keyCode <= 59) {
+            input.value = event.keyCode - 48;
+        }
+    })
+});
+
 let cmultisolve = document.getElementById("cmultisolve");
 cmultisolve.addEventListener('change', () => {
     let prefs;
@@ -160,17 +198,28 @@ function drawCanvas() {
     });
 
     //highlight selected
-    ctx.fillStyle = 'blue';
-    let cur = `${document.getElementById("box-n1").value || "0"}${document.getElementById("box-n2").value || "0"}${document.getElementById("box-n3").value || "0"}${document.getElementById("box-n4").value || "0"}`;
-    ctx.fillRect((cur % 100) * SCALE, (Math.floor(cur / 100)) * SCALE, SCALE, SCALE);
-    ctx.fillStyle = 'white';
-    if (completed.includes(cur)) {
-        ctx.fillStyle = '#02d91f';
+    let boxes = `${document.getElementById("box-n1").value || "0"}${document.getElementById("box-n2").value || "0"}${document.getElementById("box-n3").value || "0"}${document.getElementById("box-n4").value || "0"}`;
+    let c = "";
+    for (let i = 1; i < 5; i++) {
+        c += document.getElementById("n" + i + "-" + num).textContent;
     }
-    if (challengecompleted.includes(cur)) {
-        ctx.fillStyle = '#ff3be5';
-    }
-    ctx.fillRect((cur % 100) * SCALE + 1, (Math.floor(cur / 100)) * SCALE + 1, SCALE - 2, SCALE - 2);
+    generateAllQueries(c).forEach(cur => {
+        if (cur == boxes) {
+            ctx.fillStyle = 'blue';
+        } else {
+            ctx.fillStyle = '#7e79db';
+        }
+        ctx.fillRect((cur % 100) * SCALE, (Math.floor(cur / 100)) * SCALE, SCALE, SCALE);
+        ctx.fillStyle = 'white';
+        if (completed.includes(cur)) {
+            ctx.fillStyle = '#02d91f';
+        }
+        if (challengecompleted.includes(cur)) {
+            ctx.fillStyle = '#ff3be5';
+        }
+        ctx.fillRect((cur % 100) * SCALE + 1, (Math.floor(cur / 100)) * SCALE + 1, SCALE - 2, SCALE - 2);
+    })
+
     document.getElementById("canvaslabel").innerHTML = `<b>${completed.length}</b> solves`;
 }
 drawCanvas();
@@ -212,3 +261,9 @@ canvas.addEventListener('click', function (ev) {
     a.href = `sandbox.html?num=${String(id).padStart(4, '0')}&query=${getSandboxLink()}`
     a.click();
 })
+
+if (!localStorage.getItem("make10-sandboxfirst") || localStorage.getItem("make10-sandboxfirst") < 3) {
+    let x = localStorage.getItem("make10-sandboxfirst") | 0;
+    localStorage.setItem("make10-sandboxfirst", x + 1);
+    showEphemeralMessage(`note: you can use WASD/arrow keys when changing the puzzle number.`, true, "default", 20000);
+}

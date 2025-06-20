@@ -123,6 +123,9 @@ function handle(e) {
     multivars[i] = !multivars[i];
     updateMultinum(multinum, i);
     calc(num);
+    try {
+        drawCanvas();
+    } catch (e) { }
 }
 
 function enableMultisolve() {
@@ -149,9 +152,6 @@ function disableMultisolve() {
 
 function generateAllQueries(query) {
     const numvars = multivars.filter(a => a).length;
-    if (numvars == 4) {
-        throw new Error("multiplevalues");
-    }
     const queries = [];
     for (let i = 0; i < Math.pow(10, numvars); i++) {
         const digits = i.toString().padStart(numvars, '0').split('');

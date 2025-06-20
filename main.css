@@ -317,6 +317,11 @@ canvas {
     margin: 0;
     width: 30px;
     text-align: center;
+    caret-color: transparent;
+}
+
+.sandbox-num:focus {
+    background-color: rgba(93, 200, 246, 0.2);
 }
 
 .sandbox-num-span {
@@ -339,7 +344,7 @@ canvas {
 }
 
 .sandbox-num-span button:focus {
-    background-color: rgba(183, 192, 255, 0.507);
+    background-color: rgba(93, 200, 246, 0.2);
 }
 
 .up {
@@ -480,7 +485,7 @@ h1>[data-tooltip]:hover::after {
     padding: 0;
     display: block;
     font-size: 14px;
-    color: rgba(0,0,0, 0.6);
+    color: rgba(0, 0, 0, 0.6);
     margin: 0;
 }
 
@@ -516,6 +521,7 @@ ol {
     font-size: 14px;
     margin-bottom: 0;
 }
+
 .rangelabel>input {
     margin: 0;
 }
