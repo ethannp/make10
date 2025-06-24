@@ -137,26 +137,6 @@ would you like to OVERWRITE data or MERGE data?`).toUpperCase();
             } else {
                 showEphemeralMessage("import canceled; no data was changed.", true, "default", 6000)
             }
-
-            /*if (newcompleted.length - completed.length == 0 && newchallengecompleted.length - challengecompleted.length == 0) {
-                showEphemeralMessage(`no new solves to merge; no data was changed`, true, "default", 6000);
-                return;
-            }
-
-                
-
-            if (prompt(`merging ${newcompleted.length - completed.length} new solves and ${newchallengecompleted.length - challengecompleted.length} new challenge solves.\ntype MERGE to confirm.`) === "MERGE") {
-                
-            }
-
-        } else {
-            if ( === "OVERWRITE") {
-                
-
-            } else {
-                
-            }
-        }*/
         });
         img.src = e.target.result;
     });

@@ -78,6 +78,9 @@ document.addEventListener('input', event => {
 Array.from(document.querySelectorAll('.up')).forEach(input => {
     input.addEventListener("click", function () {
         let box = document.getElementById(`box-n${input.getAttribute("data-index")}`);
+        if (box.value == "") {
+            box.value = 0;
+        }
         if (parseInt(box.value) == 9) {
             box.value = 0;
         } else {
@@ -91,6 +94,9 @@ Array.from(document.querySelectorAll('.up')).forEach(input => {
 Array.from(document.querySelectorAll('.down')).forEach(input => {
     input.addEventListener("click", function () {
         let box = document.getElementById(`box-n${input.getAttribute("data-index")}`);
+        if (box.value == "") {
+            box.value = 0;
+        }
         if (parseInt(box.value) == 0) {
             box.value = 9;
         } else {
@@ -109,8 +115,6 @@ Array.from(document.querySelectorAll('.sandbox-num')).forEach(input => {
             } else {
                 input.value = parseInt(input.value) + 1;
             }
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            drawCanvas();
         }
         else if (event.keyCode == 40 || event.keyCode == 83) {
             if (parseInt(input.value) == 0) {
@@ -118,8 +122,6 @@ Array.from(document.querySelectorAll('.sandbox-num')).forEach(input => {
             } else {
                 input.value = parseInt(input.value) - 1;
             }
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            drawCanvas();
         } else if (event.keyCode == 65 || event.keyCode == 37) { //left
             if (input.getAttribute("data-index") == 1) {
                 document.getElementById("box-n4").focus();
@@ -135,7 +137,16 @@ Array.from(document.querySelectorAll('.sandbox-num')).forEach(input => {
             }
         } else if (48 <= event.keyCode && event.keyCode <= 59) {
             input.value = event.keyCode - 48;
+        } else if (event.keyCode == 8) { //backspace
+            event.preventDefault();
+            input.value = 0;
         }
+        if (input.value == "") {
+            input.value = 0;
+            console.log("changed")
+        }
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        drawCanvas();
     })
 });
 

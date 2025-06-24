@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="main.css">
         <script src="decimal.js"></script>
         <script src="gemini-mexp-decimal.js"></script>
-        <script src="SPECIAL.js" defer></script>
+        <script src="SPECIAL.js"></script>
         <script src="app.js" defer></script>
         <script src="datatransfer.js" defer></script>
         <script type="text/javascript" src="jsgif/LZWEncoder.js"></script>
@@ -28,7 +28,7 @@
             <div id="ephemeralcontainer"></div>
             <h1>make10</h1>
             <p>your goal is to make a mathematical expression that equals 10
-                using four numbers in order. allowed characters:
+                using four numbers in order. you may use the following characters:
                 <code>+-*/().^!</code>.</p>
             <p>try these to start out!</p>
             <div class="temp" id="make-1234"></div>
@@ -52,42 +52,36 @@
                         leaderboard is
                         updated manually. please dm me on discord @flfff if
                         you wish to be added!</i>
-                    <div class="lbblock king">
+                    <div id="lb-0" class="lbblock king">
                         <h2>👑99.5%👑</h2>
                         <i class="mini">9950+ puzzles solved</i>
-                        <ol>
-                            <li>phenomist (6/17/2025)</li>
-                        </ol>
+                        <ol></ol>
                     </div>
-                    <div class="lbblock first">
+                    <div id="lb-1" class="lbblock first">
                         <h2>🏆99%🏆</h2>
                         <i class="mini">9900+ puzzles solved</i>
-                        <ol>
-                            <li>phenomist (6/10/2025)</li>
-                            <li>elara (6/15/2025)</li>
-                        </ol>
+                        <ol></ol>
                     </div>
-                    <div class="lbblock second">
+                    <div id="lb-2" class="lbblock second">
                         <h2>🚀90%🚀</h2>
                         <i class="mini">9000+ puzzles solved</i>
-                        <ol>
-                            <li>elara</li>
-                            <li>phenomist</li>
-                            <li>abiteofdata</li>
-                            <li>mlemth</li>
-                        </ol>
+                        <ol></ol>
                     </div>
-                    <div class="lbblock third">
+                    <div id="lb-3" class="lbblock third">
                         <h2>👏50%👏</h2>
                         <i class="mini">5000+ puzzles solved</i>
-                        <ol>
-                            <li>elara</li>
-                            <li>phenomist</li>
-                            <li>mlemth</li>
-                            <li>abiteofdata</li>
-                            <li>fluff</li>
-                        </ol>
+                        <ol></ol>
                     </div>
+                    <script>
+                        let lb = 0;
+                        document.querySelectorAll(".lbblock").forEach(a => {
+                            let ol = a.children[2];
+                            for (let i = 0; i < LEADERBOARD[lb].length; i++) {
+                                ol.innerHTML += `<li><span class="lbtt">${LEADERBOARD[lb][i].split(";")[0]}<span class="lbtt-text">${LEADERBOARD[lb][i].split(";")[1]}</span></span></li>`
+                            }
+                            lb++;
+                        })
+                    </script>
                 </div>
             </details>
             <details>
@@ -95,7 +89,7 @@
                 <div class="settingsmenu">
                     <ul>
                         <li>not all puzzles are solvable.</li>
-                        <li>0^0 = 1 and 0! = 1. </li>
+                        <li>0^0 = 1 and 0! = 1.</li>
                         <li>the calculator is an edited version of <a
                                 href="https://github.com/bugwheels94/math-expression-evaluator#readme"
                                 target="_blank">math-expression-evaluator</a> to

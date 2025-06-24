@@ -347,6 +347,9 @@
         return (
             (t.prototype.eval = function (e, t, n) {
                 // The result of postfixEval will now be a Decimal object
+                if(e.includes("^-")) {
+                    throw new Error("caretminus")
+                }
                 return this.postfixEval(this.toPostfix(this.lex(e, t)), n);
             }),
             t

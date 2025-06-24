@@ -469,7 +469,7 @@ h1>[data-tooltip]:hover::after {
     cursor: pointer;
     line-height: 1;
     padding: 2px 5px;
-    border-radius: 2px;
+    border-radius: 3px;
 }
 
 .ephemeral-close:hover {
@@ -531,4 +531,31 @@ ol {
     margin: 10px auto;
     display: block;
     image-rendering: pixelated;
+}
+
+.lbtt {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.3);
+}
+
+.lbtt .lbtt-text {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    width: fit-content;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: rgba(0,0,0,0.8);
+    padding: 0px 5px;
+    border-radius: 3px;
+    z-index: 55;
+    transition: opacity 0.2s;
+    top: 0;
+    left: 110%;
+}
+
+.lbtt:hover .lbtt-text {
+    visibility: visible;
+    opacity: 1;
 }

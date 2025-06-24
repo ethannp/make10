@@ -214,6 +214,12 @@ function showEphemeralMessage(text, closable, type = "default", duration = 3000)
         elt.classList.add('unclosable');
     }
 
+    if (type == "caretminus") {
+        if (document.getElementsByClassName("caretminus").length > 0) {
+            return;
+        }
+        elt.classList.add("default");
+    }
     elt.classList.add(type);
 
     ephemeralcontainer.prepend(elt);
@@ -295,15 +301,15 @@ function calc(num) {
             document.getElementById("frame-" + num).classList.remove("multicomplete");
             if (err.message == "multiplevalues") {
                 ans.textContent = "🌀";
-                return;
             }
             else if (err.message == "explode") {
                 ans.innerHTML = "💥"
-                return;
             }
             else if (err.message == "infinity") {
                 ans.textContent = "♾️";
-                return;
+            } else if (err.message == "caretminus") {
+                ans.textContent = "❓"
+                showEphemeralMessage("please wrap negative exponents in parenthesis!", true, "caretminus", 5000);
             }
             else {
                 ans.textContent = "❓"
@@ -366,6 +372,10 @@ function calc(num) {
             }
             else if (e.message == "infinity") {
                 ans.textContent = "♾️";
+            }
+            else if (e.message == "caretminus") {
+                ans.textContent = "❓"
+                showEphemeralMessage("please wrap negative exponents in parenthesis!", true, "caretminus", 5000);
             }
             else {
                 ans.textContent = "❓"
