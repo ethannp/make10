@@ -22,4 +22,4 @@ const LEADERBOARD = [
     ["phenomist;6/10/2025", "elara;6/15/2025", "abiteofdata;6/15/2025"],
     ["elara;6/8/2025", "phenomist;6/9/2025", "abiteofdata;6/15/2025", "mlemth;6/17/2025", "MTFlowCzq;7/8/2025"],
     ["elara;6/6/2025", "phenomist;6/6/2025", "mlemth;6/11/2025", "abiteofdata;6/12/2025", "fluff;6/12/2025", "MTFlowCzq;6/21/2025"]
-]
+] 
