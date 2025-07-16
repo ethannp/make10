@@ -22,7 +22,8 @@ const LEADERBOARD = [
     [
         "phenomist;6/10/2025", 
         "elara;6/15/2025", 
-        "abiteofdata;6/15/2025"
+        "abiteofdata;6/15/2025",
+        "MTFlowCzq;7/16/2025"
     ],
     [
         "elara;6/8/2025", 
