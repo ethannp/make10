@@ -161,8 +161,7 @@ details {
     overflow-y: auto;
     position: relative;
     border: 1px solid black;
-    padding-bottom: 30px;
-    padding-top: 10px;
+    padding-bottom: 18px;
 }
 
 #content {

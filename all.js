@@ -21,8 +21,8 @@ function render() {
     const scrollTop = container.scrollTop;
     const containerHeight = container.clientHeight;
 
-    const startRow = Math.floor(scrollTop / fullItemHeight);
-    const visibleRows = Math.ceil(containerHeight / fullItemHeight) + 2;
+    const startRow = Math.max(0, Math.floor(scrollTop / fullItemHeight)-1);
+    const visibleRows = Math.ceil(containerHeight / fullItemHeight) + 1;
 
     const rowContentWidth = columns * fullItemWidth;
 
