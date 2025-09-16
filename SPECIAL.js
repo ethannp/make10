@@ -3,7 +3,8 @@ const recommendedpuzzles = [{author: "intro_puzzle_bot", emoji: "🤖", puzzles:
     {author: "phenomist", emoji: "🌁", puzzles: ['9598', '9958', '3495', '8656', '2868', '7537', '7556', '4898', '4394', '8951', '5694', '4955', '3955', '6869', '8519']}, 
     {author: "abiteofdata", emoji: "🦎", puzzles: ['1196', '7800', '7333', '5257', '7588']}, 
     {author: "n3rl", emoji: "🦐", puzzles: ['9387']},
-    {author: "elara", emoji: "⛰️", puzzles: ['5998', '4908']}]
+    {author: "elara", emoji: "⛰️", puzzles: ['5998', '4908']},
+    {author: "MTFlowCzq", emoji: "♥️", puzzles: ['6768']}]
 const challenge = [{puz: '1254', restrictions: '+-'}, 
     {puz: '3332', restrictions: '+-'}, 
     {puz: '8235', restrictions: '+-'}, 
