@@ -4,7 +4,8 @@ const recommendedpuzzles = [{author: "intro_puzzle_bot", emoji: "🤖", puzzles:
     {author: "abiteofdata", emoji: "🦎", puzzles: ['1196', '7800', '7333', '5257', '7588']}, 
     {author: "n3rl", emoji: "🦐", puzzles: ['9387']},
     {author: "elara", emoji: "⛰️", puzzles: ['5998', '4908']},
-    {author: "MTFlowCzq", emoji: "♥️", puzzles: ['6768']}]
+    {author: "MTFlowCzq", emoji: "♥️", puzzles: ['6768', '7995', '5769']}
+]
 const challenge = [{puz: '1254', restrictions: '+-'}, 
     {puz: '3332', restrictions: '+-'}, 
     {puz: '8235', restrictions: '+-'}, 
@@ -17,7 +18,9 @@ const challenge = [{puz: '1254', restrictions: '+-'},
     {puz: '7333', restrictions: '+-'},
     {puz: '8519', restrictions: '^'},
     {puz: '5988', restrictions: '^'},
-    {puz: '5788', restrictions: '()'}
+    {puz: '5788', restrictions: '()'},
+    {puz: '7995', restrictions: '+-'},
+    {puz: '5769', restrictions: '+-'}
 ]
 const DEFAULT_SETTINGS = "00000000" // unsolved, completed, recommended, random, has-challenge, includerandom, multisolve, openinsandbox
 
